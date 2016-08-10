@@ -1,4 +1,4 @@
-package java0809_project;
+package com.view;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -12,14 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-class SignUpWindow extends JFrame{
+public class SignUp extends JFrame{
 	JTextField inputJumin1, inputJumin2,inputName,inputId,pwConfirm, sameConfirm;
 	JPasswordField inputPw, reInputPw;
 	JComboBox<String> lectBox;
 	JButton signUpBtn, dupliConfirmBtn, confirmBtn1, confirmBtn2;
 	
 	
-	public SignUpWindow() {
+	public SignUp() {
 		this.setTitle(" 회원가입");
 		
 		inputName = new JTextField(8);
@@ -92,11 +92,11 @@ class SignUpWindow extends JFrame{
 		
 	}//end SignUpWindow()
 }
-public class SignUp {
-
-	public static void main(String[] args) {
-		
-		new SignUpWindow();
-	}
-
-}
+//public class SignUp {
+//
+//	public static void main(String[] args) {
+//
+//		new SignUpWindow();
+//	}
+//
+//}

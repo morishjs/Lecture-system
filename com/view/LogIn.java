@@ -1,4 +1,4 @@
-package java0809_project;
+package com.view;
 
 import java.awt.BorderLayout;
 
@@ -9,13 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-class LogInWindow extends JFrame{
+public class LogIn extends JFrame{
 	
 	JRadioButton studentBtn, lecturerBtn;
 	JTextField idTxt,passwordTxt;
 	
 	JButton loginBtn, signupBtn;
-	public LogInWindow() {
+	public LogIn() {
 		this.setTitle(" 로그인");
 		
 		studentBtn = new JRadioButton("학생",false);
@@ -53,11 +53,12 @@ class LogInWindow extends JFrame{
 		
 	}//end LogInWindow()
 }//end LogInWindow
-public class LogIn {
 
-	public static void main(String[] args) {
-		new LogInWindow();
-
-	}
-
-}
+//public class LogIn {
+//
+//	public static void main(String[] args) {
+//		new LogInWindow();
+//
+//	}
+//
+//}

@@ -1,4 +1,4 @@
-package TeamPjt;
+package com.view;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import java.io.*;
 import javax.swing.*;
 
-class SwingCalender extends JFrame implements ActionListener
+public class SwingCalender extends JFrame implements ActionListener
 
 {
 	String[] days = { "월", "화", "수", "목", "금", "토", "일" };
@@ -165,10 +165,10 @@ class SwingCalender extends JFrame implements ActionListener
 	}// end calInput()
 }// end class
 
-public class Calender{
-	public static void main(String[] args) {
-		SwingCalender jdbc = new SwingCalender();
-
-	}
-
-}
+//public class Calender{
+//	public static void main(String[] args) {
+//		SwingCalender jdbc = new SwingCalender();
+//
+//	}
+//
+//}

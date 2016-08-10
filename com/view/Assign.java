@@ -1,4 +1,4 @@
-package semi;
+package com.view;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-class assigns extends JFrame{
+public class Assign extends JFrame{
 	JLabel lecture, lecturer,assignmentex,deadline,uploadfile,explanation;
 	JTextArea assignta,explanta;
 	JTextField fileRo;
 	JButton sebtn, okbtn, canbtn;
 	String lecname,lecrname,deaddate;
 
-	public assigns(){
+	public Assign(){
 		this.setTitle("과제제출");
 		lecture = new JLabel("강의명 : "+lecname);
 		lecturer = new JLabel("강사명 : "+lecrname);
@@ -87,11 +87,11 @@ class assigns extends JFrame{
 	}
 }
 
-
-public class assign extends JFrame {
-
-	public static void main(String[] args) {
-		new assigns();
-	}
-
-}
+//
+//public class assign extends JFrame {
+//
+//	public static void main(String[] args) {
+//		new Assign();
+//	}
+//
+//}

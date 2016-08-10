@@ -4,7 +4,7 @@ package com.model;
  * Created by Junsuk on 2016-08-09.
  */
 
-class Student extends Person{
+public class Student extends Person{
 
     private Lecture lecture;
 
