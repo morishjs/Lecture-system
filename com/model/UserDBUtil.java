@@ -1,7 +1,11 @@
 package com.model;
 
+import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
+
+import static javafx.application.Platform.exit;
 
 /**
  * Created by Junsuk on 2016-08-09.
@@ -10,6 +14,14 @@ public class UserDBUtil {
     //    DataSource dataSource;
 //    DriverManager driverManager;
     Connection connection = null;
+
+    public static void setWarningMsg(String text){
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane optionPane = new JOptionPane(text,JOptionPane.WARNING_MESSAGE);
+        JDialog dialog = optionPane.createDialog("Warning!");
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 
     public UserDBUtil() {
         try {
@@ -21,7 +33,9 @@ public class UserDBUtil {
             connection = DriverManager.getConnection(url, username, password);
 
         } catch (SQLException e) {
+            setWarningMsg("DB연결을 확인해주세요");
             e.printStackTrace();
+            System.exit(0);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -47,6 +61,7 @@ public class UserDBUtil {
     public Student getStudent(String id, String passwd) {
 
         Student student = null;
+
         ResultSet resultSet;
         try {
             String sql = "select * from student where student_id=? AND student_pwd=?";
@@ -121,6 +136,14 @@ public class UserDBUtil {
             e.printStackTrace();
         }
         return assignments;
+    }
+
+    public void addNewStudent(Student student) {
+
+        String sql = "insert into student value(?, ?, ?, ?)";
+        String[] info = new String[]{student.getId(),student.getName(),student.getLecture(),student.getPasswd()};
+        sqlTransaction(sql,info);
+
     }
 
 

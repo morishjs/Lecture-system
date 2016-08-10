@@ -12,16 +12,32 @@ import java.util.ArrayList;
  */
 public class ClientController {
     UserDBUtil userDBUtil;
-    //For student login.
-
+    private static ClientController instance = new ClientController();
+    private Session session=null;
     Assign assign = null;
     LogIn login = null;
     SignUp signUp = null;
     SwingCalender swingCalender = null;
+//
+//    Session session = null;
+//
+//    session.setType("Stduent");
+//    session.setId(student.getId());
 
+    private ClientController(){
 
+    }
+    public static ClientController getInstance(){
+        return instance;
+    }
     public void init() {
+        userDBUtil = new UserDBUtil();
         new LogIn();
+    }
+
+    public void setSession(Person person){
+        session.setId(person.getId());
+        session.setType(person.getType());
     }
 
     public Student login(String id, String passwd) {
@@ -53,16 +69,21 @@ public class ClientController {
         return student;
     }
 
-    void signup() {
-        //Insert data into the database.
+//    void signup(Signup signup) {
+//        //Insert data into the database.
+//
+//        signUp = new SignUp();
+//
+//        Student student = signUp.getNewStudent();
+//        userDBUtil.addNewStudent(student);
+//
+//        //TODO: Signup
+//        //Step1. Inflate the view of signup.
+//        //Step2. When the form is completed, button onclicked, get the data from textfield.
+//        //Step3. Add the information to Database. UserDBUtil class take a role to manage 'load and 'store' transaction.
+//        //userDBUtil.add(id, passwd);
+//    }
 
-
-        //TODO: Signup
-        //Step1. Inflate the view of signup.
-        //Step2. When the form is completed, button onclicked, get the data from textfield.
-        //Step3. Add the information to Database. UserDBUtil class take a role to manage 'load and 'store' transaction.
-        //userDBUtil.add(id, passwd);
-    }
 
     public Lecturer l_Login(String id, String passwd){
         Lecturer lecturer = userDBUtil.getLecturer(id,passwd);
@@ -87,4 +108,7 @@ public class ClientController {
         }
     }
 
+    public void showSignUpView(){
+        new SignUp();
+    }//end showSignUpView()
 }

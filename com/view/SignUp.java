@@ -1,19 +1,27 @@
 package com.view;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class SignUp extends JFrame{
-	JTextField inputJumin1, inputJumin2,inputName,inputId,pwConfirm, sameConfirm;
+import com.control.ClientController;
+
+public class SignUp extends JFrame implements ActionListener{
+	
+	JTextField inputJumin1,inputJumin2,inputName,inputId,pwConfirm, sameConfirm;
 	JPasswordField inputPw, reInputPw;
 	JComboBox<String> lectBox;
 	JButton signUpBtn, dupliConfirmBtn, confirmBtn1, confirmBtn2;
@@ -24,19 +32,9 @@ public class SignUp extends JFrame{
 		
 		inputName = new JTextField(8);
 		
-		JPanel jp0=new JPanel(new FlowLayout(FlowLayout.LEFT));
-		jp0.add(new JLabel("이름 "));
-		jp0.add(inputName);
-		
-		inputJumin1 = new JTextField(6);
-		inputJumin2 = new JTextField(7);
-		
 		JPanel jp1=new JPanel(new FlowLayout(FlowLayout.LEFT));
-		jp1.add(new JLabel("주민등록번호"));
-		jp1.add(inputJumin1);
-		jp1.add(new JLabel("-"));
-		jp1.add(inputJumin2);
-		
+		jp1.add(new JLabel("이름 "));
+		jp1.add(inputName);
 		
 		inputId = new JTextField(15);
 		dupliConfirmBtn = new JButton("중복확인");
@@ -82,13 +80,42 @@ public class SignUp extends JFrame{
 		signUpBtn=new JButton("회원가입");
 		JPanel jp6 =new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jp6.add(signUpBtn);
-		setLayout(new GridLayout(7, 1));
-		add(jp0); add(jp1); add(jp2); add(jp3); add(jp4); add(jp5); add(jp6); 
+		setLayout(new GridLayout(6, 1));
+		add(jp1); add(jp2); add(jp3); add(jp4); add(jp5); add(jp6); 
+		
+		
+		signUpBtn.addActionListener(this);
 		
 		setSize(600,600);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+	}
+	
+	public void setMessage(String msg) {
+		JLabel label = new JLabel(msg);
+		JOptionPane.showMessageDialog(this, label);
+	}// end setMessage
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj=e.getSource();
+		if(obj==signUpBtn){
+			String nameT = inputName.getText().trim();	
+			String idT = inputId.getText().trim();
+			String pwT = inputPw.getText().trim();
+			String lectureT =(String)lectBox.getSelectedItem();
+			
+			// 모든 항목을 입력하지 않았을때 경고.
+			if (nameT.length()<1 || idT.length()<1 || pwT.length()<1 || lectureT.length()<1) {
+				setMessage("모든 항목을 입력하십시오");
+				return;
+			}
+			
+			new SignUpCheck(nameT,idT,pwT,lectureT);
+			
+		}
 		
 	}//end SignUpWindow()
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 public class Lecturer extends Person {
     HashMap<String,Lecture> lectureList;
-
+    private String type;
     Lecturer(){
         lectureList = new HashMap<>();
     }
@@ -31,4 +31,10 @@ public class Lecturer extends Person {
     public void setLecturerName(String string) {
         this.name = string;
     }
+    @Override
+    public String getType(){
+        return type;
+    }
+
+
 }
