@@ -1,9 +1,5 @@
 package com.model;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -31,28 +27,30 @@ public class UserDBUtil {
 
     }
 
-    public ResultSet sqlTransaction(String sql, String id){
+    public ResultSet sqlTransaction(String sql, String[] info){
 //        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-
-
         try {
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id);
+            for(int i=1;i<=info.length;i++){
+                statement.setString(i, info[i]);
+            }
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return resultSet;
     }
+
     public Student getStudent(String id, String passwd) {
 
         Student student = null;
         ResultSet resultSet;
         try {
-            String sql = "select * from student where student_id=?";
-            resultSet = sqlTransaction(sql,id);
+            String sql = "select * from student where student_id=? AND student_pwd=?";
+            String[] info = new String[]{id, passwd};
+            resultSet = sqlTransaction(sql,info);
             while (resultSet.next()) {
                 student.setStudentID(resultSet.getString(1));
                 student.setStudentName(resultSet.getString(2));
@@ -61,6 +59,7 @@ public class UserDBUtil {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
         return student;
     }
@@ -69,7 +68,8 @@ public class UserDBUtil {
         Lecture lecture = null;
         ResultSet resultSet = null;
         String sql = "select * from LECTURE where LECTURE_ID=?";
-        resultSet = sqlTransaction(sql, id);
+        String[] info = new String[]{id};
+        resultSet = sqlTransaction(sql, info);
         try {
             while (resultSet.next()) {
                 String lectureId = resultSet.getString(1);
@@ -87,7 +87,8 @@ public class UserDBUtil {
         ArrayList<Assignment> assignments = new ArrayList<>();
         ResultSet resultSet = null;
         String sql = "select * from assignment where lecture_id=?";
-        resultSet = sqlTransaction(sql, lectureId);
+        String[] info = new String[]{lectureId};
+        resultSet = sqlTransaction(sql, info);
         try {
             while (resultSet.next()) {
                 Assignment assignment=null;

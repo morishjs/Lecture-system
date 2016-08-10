@@ -25,19 +25,19 @@ public class ClientController {
         new LogIn();
     }
 
-    public Student login(String id, String passwd) {
-        //TODO: Login
-        //Step1 : Verify specified information from database. (Select * from student where student_id = id )
-        //Step2 : If there is no problem, then create Lecture object and inject dependency into Student object.
-        //(Select * from lecture where lecture_id = student.lecture_id)
-        //Step3 : If there is no problem, then create assignment object.
-        //Step4 : lecture.add(assignments) -> student.add(lecture)
+            public Student login(String id, String passwd) {
+                //TODO: Login
+                //Step1 : Verify specified information from database. (Select * from student where student_id = id )
+                //Step2 : If there is no problem, then create Lecture object and inject dependency into Student object.
+                //(Select * from lecture where lecture_id = student.lecture_id)
+                //Step3 : If there is no problem, then create assignment object.
+                //Step4 : lecture.add(assignments) -> student.add(lecture)
 
-        Student student = userDBUtil.getStudent(id, passwd);
-        Lecture lecture;
-        ArrayList<Assignment> assignments;
-        if (student == null) {
-            //TODO: Print alert message.
+                Student student = userDBUtil.getStudent(id, passwd);
+                Lecture lecture;
+                ArrayList<Assignment> assignments;
+                if (student == null) {
+                    //TODO: Print alert message.
             return null;
         } else {
             lecture = userDBUtil.getLecture(student.getId());
