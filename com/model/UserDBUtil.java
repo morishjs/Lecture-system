@@ -1,26 +1,43 @@
 package com.model;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
  * Created by Junsuk on 2016-08-09.
  */
 public class UserDBUtil {
-    DataSource dataSource;
+//    DataSource dataSource;
+//    DriverManager driverManager;
+    Connection connection = null;
+    public UserDBUtil(){
+        try {
+
+            Class.forName("oracle.jdbc.OracleDriver");
+            String url = "jdbc:oracle:thin://@192.168.10.230:1521:xe";
+            String username="hr";
+            String password="a1234";
+            connection = DriverManager.getConnection(url, username, password);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public ResultSet sqlTransaction(String sql, String id){
-        Connection connection = null;
+//        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
 
         try {
-            connection = dataSource.getConnection();
             statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             resultSet = statement.executeQuery();
@@ -51,13 +68,14 @@ public class UserDBUtil {
     public Lecture getLecture(String id) {
         Lecture lecture = null;
         ResultSet resultSet = null;
-        String sql = "select * from lecture where lecture_id=?";
+        String sql = "select * from LECTURE where LECTURE_ID=?";
         resultSet = sqlTransaction(sql, id);
         try {
             while (resultSet.next()) {
-                lecture.setLectureId(resultSet.getString(1));
-                lecture.setLectureClassroom(resultSet.getString(2));
-                lecture.setLectureName(resultSet.getString(3));
+                String lectureId = resultSet.getString(1);
+                String lectureClass = resultSet.getString(2);
+                String lectureName = resultSet.getString(3);
+                lecture = new Lecture(lectureId,lectureClass,lectureName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,6 +100,7 @@ public class UserDBUtil {
         }
         return assignments;
     }
+
 
     //Adding
 

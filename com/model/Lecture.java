@@ -17,8 +17,15 @@ public class Lecture {
         assignmentList = new ArrayList<>();
     }
 
+    public Lecture(String lectureId, String lectureClass, String lectureName) {
+        this.lectureId = lectureId;
+        this.lectureClassroom = lectureClass;
+        this.lectureName = lectureName;
+    }
+
     public void setLectureId(String lectureId) {
         this.lectureId = lectureId;
+
     }
 
     public void setLectureClassroom(String lectureClassroom) {
