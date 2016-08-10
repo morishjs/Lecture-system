@@ -1,5 +1,6 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,4 +18,17 @@ public class Lecturer extends Person {
     }
 
 
+    public void setLectures(ArrayList<Lecture> lectures) {
+        for (Lecture lecture : lectures) {
+            lectureList.put(lecture.getLectureName(), lecture);
+        }
+    }
+
+    public void setLecturerID(String string) {
+        this.id = string;
+    }
+
+    public void setLecturerName(String string) {
+        this.name = string;
+    }
 }
