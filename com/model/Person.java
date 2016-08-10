@@ -3,7 +3,7 @@ package com.model;
 /**
  * Created by Junsuk on 2016-08-09.
  */
-abstract public class Person {
+public class Person {
     String id;
     String passwd;
     String name;
@@ -17,5 +17,5 @@ abstract public class Person {
         return this.name;
     }
 
-    public abstract String getType();
+
 }

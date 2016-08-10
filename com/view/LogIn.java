@@ -1,6 +1,9 @@
 package com.view;
 
+import com.control.*;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -9,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class LogIn extends JFrame{
+public class LogIn extends JFrame implements ActionListener{
 	
 	JRadioButton studentBtn, lecturerBtn;
 	JTextField idTxt,passwordTxt;
@@ -18,7 +21,7 @@ public class LogIn extends JFrame{
 	public LogIn() {
 		this.setTitle(" 로그인");
 		
-		studentBtn = new JRadioButton("학생",false);
+		studentBtn = new JRadioButton("학생",true);
 		lecturerBtn = new JRadioButton("강사",false);
 		
 		//라디오버튼 중복체크 방지
@@ -47,18 +50,38 @@ public class LogIn extends JFrame{
 	
 		add(jp1,BorderLayout.NORTH); add(jp3,BorderLayout.SOUTH);
 		add(jp2,BorderLayout.CENTER);
+		
+		////
+		signupBtn.addActionListener(this);
+		
 		setSize(400,150);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//end LogInWindow()
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if(obj==signupBtn && studentBtn.isSelected()){
+			ClientController cc=new ClientController();
+			cc.showSignUpView();
+			
+		}
+		
+	}
 }//end LogInWindow
 
 //public class LogIn {
 //
+
 //	public static void main(String[] args) {
 //		new LogInWindow();
 //
 //	}
 //
 //}
+
+
+
+

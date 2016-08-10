@@ -7,7 +7,6 @@ package com.model;
 public class Student extends Person{
 
     private Lecture lecture;
-    private String type;
 
     public void setStudentID(String studentID) {
         id = studentID;
@@ -20,19 +19,5 @@ public class Student extends Person{
     public void setLecture(Lecture lecture){
         this.lecture = lecture;
     }
-
-    public String getLecture() {
-        return lecture.getLectureName();
-    }
-
-    public String getPasswd() {
-        return this.getPasswd();
-    }
-
-    @Override
-    public String getType(){
-        return type;
-    }
-
 
 }
