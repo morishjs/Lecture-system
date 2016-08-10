@@ -73,16 +73,21 @@ public class LogIn extends JFrame implements ActionListener{
 				if(lecturer == null){
 					JOptionPane.showMessageDialog(this, "정보를 확인해주세요");
 				}else{
+					//세션 설정
 					cc.setSession(lecturer);
+					//캘린더 출력해야함.
+					cc.showCalender();
 				}
 
 			} else if (studentBtn.isSelected()) {
 				Student student = cc.login(idTxt.getText(), passwordTxt.getText());
-
 				if (student == null) {
 					JOptionPane.showMessageDialog(this, "정보를 확인해주세요");
 				} else {
+					//세션 설정
 					cc.setSession(student);
+					//캘린더 출력해야함
+					cc.showCalender();
 				}
 			}
 		}

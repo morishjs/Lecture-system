@@ -69,20 +69,24 @@ public class ClientController {
         return student;
     }
 
-//    void signup(Signup signup) {
-//        //Insert data into the database.
-//
-//        signUp = new SignUp();
-//
-//        Student student = signUp.getNewStudent();
-//        userDBUtil.addNewStudent(student);
-//
-//        //TODO: Signup
-//        //Step1. Inflate the view of signup.
-//        //Step2. When the form is completed, button onclicked, get the data from textfield.
-//        //Step3. Add the information to Database. UserDBUtil class take a role to manage 'load and 'store' transaction.
-//        //userDBUtil.add(id, passwd);
-//    }
+    //회원가입.
+    public void signup(String id, String name, String pw, String lectureCode) {
+        //Insert data into the database.
+
+        Student student = new Student();
+        student.setId(id);
+        student.setName(name);
+        student.setPasswd(pw);
+        ArrayList<Lecture> lecture = userDBUtil.getLectures(lectureCode);
+        student.setLecture(lecture.get(0));
+        userDBUtil.addNewStudent(student);
+
+        //TODO: Signup
+        //Step1. Inflate the view of signup.
+        //Step2. When the form is completed, button onclicked, get the data from textfield.
+        //Step3. Add the information to Database. UserDBUtil class take a role to manage 'load and 'store' transaction.
+        //userDBUtil.add(id, passwd);
+    }
 
 
     public Lecturer l_Login(String id, String passwd){
@@ -111,4 +115,8 @@ public class ClientController {
     public void showSignUpView(){
         new SignUp();
     }//end showSignUpView()
+
+    public void showCalender() {
+        new SwingCalender();
+    }
 }

@@ -7,8 +7,7 @@ import java.util.HashMap;
  * Created by Junsuk on 2016-08-09.
  */
 public class Lecturer extends Person {
-    HashMap<String,Lecture> lectureList;
-    private String type;
+    private HashMap<String,Lecture> lectureList;
     Lecturer(){
         lectureList = new HashMap<>();
     }
@@ -24,13 +23,6 @@ public class Lecturer extends Person {
         }
     }
 
-    public void setLecturerID(String string) {
-        this.id = string;
-    }
-
-    public void setLecturerName(String string) {
-        this.name = string;
-    }
     @Override
     public String getType(){
         return type;

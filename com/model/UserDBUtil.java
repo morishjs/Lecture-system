@@ -68,8 +68,8 @@ public class UserDBUtil {
             String[] info = new String[]{id, passwd};
             resultSet = sqlTransaction(sql, info);
             while (resultSet.next()) {
-                student.setStudentID(resultSet.getString(1));
-                student.setStudentName(resultSet.getString(2));
+                student.setId(resultSet.getString(1));
+                student.setName(resultSet.getString(2));
             }
 
         } catch (SQLException e) {
@@ -88,8 +88,8 @@ public class UserDBUtil {
         resultSet = sqlTransaction(sql, info);
         try {
             while (resultSet.next()) {
-                lecturer.setLecturerID(resultSet.getString(1));
-                lecturer.setLecturerName(resultSet.getString(2));
+                lecturer.setId(resultSet.getString(1));
+                lecturer.setName(resultSet.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,12 +138,11 @@ public class UserDBUtil {
         return assignments;
     }
 
+    //DB에 학생정보를 등록함.
     public void addNewStudent(Student student) {
-
         String sql = "insert into student value(?, ?, ?, ?)";
         String[] info = new String[]{student.getId(),student.getName(),student.getLecture(),student.getPasswd()};
         sqlTransaction(sql,info);
-
     }
 
 

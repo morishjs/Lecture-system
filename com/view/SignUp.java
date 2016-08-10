@@ -25,8 +25,11 @@ public class SignUp extends JFrame implements ActionListener{
 	JPasswordField inputPw, reInputPw;
 	JComboBox<String> lectBox;
 	JButton signUpBtn, dupliConfirmBtn, confirmBtn1, confirmBtn2;
-	
-	
+	String nameT;
+	String idT;
+	String pwT;
+	String lectureT;
+
 	public SignUp() {
 		this.setTitle(" 회원가입");
 		
@@ -102,18 +105,19 @@ public class SignUp extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();
 		if(obj==signUpBtn){
-			String nameT = inputName.getText().trim();	
-			String idT = inputId.getText().trim();
-			String pwT = inputPw.getText().trim();
-			String lectureT =(String)lectBox.getSelectedItem();
+			nameT = inputName.getText().trim();
+			idT = inputId.getText().trim();
+			pwT = inputPw.getText().trim();
+			lectureT =(String)lectBox.getSelectedItem();
 			
 			// 모든 항목을 입력하지 않았을때 경고.
 			if (nameT.length()<1 || idT.length()<1 || pwT.length()<1 || lectureT.length()<1) {
 				setMessage("모든 항목을 입력하십시오");
 				return;
 			}
-			
-			new SignUpCheck(nameT,idT,pwT,lectureT);
+			ClientController clientController = ClientController.getInstance();
+			clientController.signup(idT,nameT,pwT,lectureT);
+			//new SignUpCheck(nameT,idT,pwT,lectureT);
 			
 		}
 		
