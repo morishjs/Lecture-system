@@ -1,5 +1,11 @@
-package com.model;
+package com.control;
 
+import com.model.Assignment;
+import com.model.Lecture;
+import com.model.Student;
+import com.model.UserDBUtil;
+import oracle.jdbc.util.Login;
+import com.view.*;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +14,17 @@ import java.util.ArrayList;
 public class ClientController {
     UserDBUtil userDBUtil;
     //For student login.
+
+    Assign assign = null;
+    LogIn login = null;
+    SignUp signUp = null;
+    SwingCalender swingCalender = null;
+
+
+    public void init(){
+        new LogIn();
+    }
+
     public Student login(String id, String passwd) {
         //TODO: Login
         //Step1 : Verify specified information from database. (Select * from student where student_id = id )

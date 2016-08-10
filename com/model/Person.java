@@ -8,15 +8,14 @@ public class Person {
     String passwd;
     String name;
 
-    String getId() {
+    public String getId() {
         return this.id;
     }
 
-    String getName()
+    public String getName()
     {
         return this.name;
     }
-
 
 
 }
