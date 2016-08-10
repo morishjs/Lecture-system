@@ -123,6 +123,14 @@ public class UserDBUtil {
         return assignments;
     }
 
+    public void addNewStudent(Student student) {
+
+        String sql = "insert into student value(?, ?, ?, ?)";
+        String[] info = new String[]{student.getId(),student.getName(),student.getLecture(),student.getPasswd()};
+        sqlTransaction(sql,info);
+
+    }
+
 
     //Adding
 

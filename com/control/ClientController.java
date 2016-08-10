@@ -12,16 +12,32 @@ import java.util.ArrayList;
  */
 public class ClientController {
     UserDBUtil userDBUtil;
-    //For student login.
+    private static ClientController instance = new ClientController();
 
     Assign assign = null;
     LogIn login = null;
     SignUp signUp = null;
     SwingCalender swingCalender = null;
+//
+//    Session session = null;
+//
+//    session.setType("Stduent");
+//    session.setId(student.getId());
 
+    private ClientController(){
 
+    }
+    public static ClientController getInstance(){
+        return instance;
+    }
     public void init() {
         new LogIn();
+    }
+
+    public setSession(Person person){
+        Session session;
+        session.setId(person.getId());
+        session.setType(person.getType());
     }
 
     public Student login(String id, String passwd) {
@@ -53,9 +69,13 @@ public class ClientController {
         return student;
     }
 
-    void signup() {
+    void signup(Signup signup) {
         //Insert data into the database.
 
+        signUp = new SignUp();
+
+        Student student = signUp.getNewStudent();
+        userDBUtil.addNewStudent(student);
 
         //TODO: Signup
         //Step1. Inflate the view of signup.
@@ -63,6 +83,7 @@ public class ClientController {
         //Step3. Add the information to Database. UserDBUtil class take a role to manage 'load and 'store' transaction.
         //userDBUtil.add(id, passwd);
     }
+
 
     public Lecturer l_Login(String id, String passwd){
         Lecturer lecturer = userDBUtil.getLecturer(id,passwd);
