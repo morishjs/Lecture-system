@@ -133,18 +133,24 @@ public class UserDBUtil {
     public ArrayList<Assignment> getAssignment(String lectureId) {
         ArrayList<Assignment> assignments = new ArrayList<>();
         ResultSet resultSet = null;
+        Assignment assignment = null;
+
         String sql = "select * from assignment where lecture_id=?";
         String[] info = new String[]{lectureId};
         resultSet = sqlTransaction(sql, info);
+
         try {
             while (resultSet.next()) {
-                Assignment assignment = null;
+                assignment = new Assignment();
                 assignment.setAssignmentName(resultSet.getString(1));
                 assignment.setAssignmentDeadlline(resultSet.getString(2));
+                assignment.setAssignmentDescription(resultSet.getString(4));
                 assignments.add(assignment);
             }
         } catch (SQLException e) {
+            setWarningMsg("Assignment가 존재하지 않습니다.");
             e.printStackTrace();
+            return null;
         }
         return assignments;
     }
