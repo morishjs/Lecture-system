@@ -7,13 +7,18 @@ import com.model.Student;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
+import javax.swing.text.Document;
 
-public class LogIn extends JFrame implements ActionListener{
+public class LogIn extends JFrame implements ActionListener,MouseListener{
 
 	JRadioButton studentBtn, lecturerBtn;
-	JTextField idTxt,passwordTxt;
+	JTextField idTxt;
+	JPasswordField passwordTxt;
+	
 
 	JButton loginBtn, signupBtn;
 	public LogIn() {
@@ -33,7 +38,10 @@ public class LogIn extends JFrame implements ActionListener{
 		jp1.add(lecturerBtn);
 
 		idTxt = new JTextField("아이디", 15);
-		passwordTxt = new JTextField("비밀번호",15);
+		passwordTxt = new JPasswordField("비밀번호", 15);
+		passwordTxt.setEchoChar((char)0);
+		
+	
 
 
 		JPanel jp2= new JPanel();
@@ -52,8 +60,10 @@ public class LogIn extends JFrame implements ActionListener{
 
 		////
 		signupBtn.addActionListener(this);
-
-
+		////
+		idTxt.addMouseListener(this);
+		passwordTxt.addMouseListener(this);
+		
 		setSize(400,150);
 		setVisible(true);
 		setResizable(false);
@@ -90,8 +100,49 @@ public class LogIn extends JFrame implements ActionListener{
 					cc.showCalender();
 				}
 			}
+			
 		}
 
+	}
+	//마우스 클릭 시 textfield clear
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		Object obj = e.getSource();
+		if(obj==idTxt)
+			idTxt.setText("");
+		else if(obj==passwordTxt){
+			//passwordTxt.setEchoChar('*');
+			   if (passwordTxt.getText().equals("비밀번호")) {
+	                passwordTxt.setText("");
+	                passwordTxt.setEchoChar('*');
+	            }
+					
+			}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }//end LogInWindow
 
