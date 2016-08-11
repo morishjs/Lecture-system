@@ -68,8 +68,10 @@ public class UserDBUtil {
             String[] info = new String[]{id, passwd};
             resultSet = sqlTransaction(sql, info);
             while (resultSet.next()) {
+                student = new Student();
                 student.setId(resultSet.getString(1));
                 student.setName(resultSet.getString(2));
+                student.setLecture(new Lecture(resultSet.getString(4)));
             }
 
         } catch (SQLException e) {

@@ -40,6 +40,10 @@ public class ClientController {
         session.setType(person.getType());
     }
 
+    public Session getSession(){
+        return session;
+    }
+
     public Student login(String id, String passwd) {
         //TODO: Login
         //Step1 : Verify specified information from database. (Select * from student where student_id = id )
@@ -56,7 +60,7 @@ public class ClientController {
             //TODO: Print alert message.
             return null;
         } else {
-            lectures = userDBUtil.getLectures(student.getId());
+            lectures = userDBUtil.getLectures(student.getLecture());
             if (lectures == null) {
                 //No course to take.
                 return null;
