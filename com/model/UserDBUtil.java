@@ -13,7 +13,7 @@ import static javafx.application.Platform.exit;
 public class UserDBUtil {
     //    DataSource dataSource;
 //    DriverManager driverManager;
-    Connection connection = null;
+    public Connection connection = null;
 
     public static void setWarningMsg(String text){
         Toolkit.getDefaultToolkit().beep();
@@ -49,7 +49,7 @@ public class UserDBUtil {
         try {
             statement = connection.prepareStatement(sql);
             for (int i = 1; i <= info.length; i++) {
-                statement.setString(i, info[i]);
+                statement.setString(i, info[i-1]);
             }
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
@@ -83,11 +83,12 @@ public class UserDBUtil {
         Lecturer lecturer = null;
         ResultSet resultSet;
 
-        String sql = "select * from lecturer where lecturer_id=? AND lecturer_pwd=?";
+        String sql = "SELECT * FROM LECTURER WHERE LECTURER_ID=? AND LECTURER_PWD=?";
         String[] info = new String[]{id, passwd};
         resultSet = sqlTransaction(sql, info);
         try {
             while (resultSet.next()) {
+                lecturer = new Lecturer();
                 lecturer.setId(resultSet.getString(1));
                 lecturer.setName(resultSet.getString(2));
             }
@@ -115,6 +116,11 @@ public class UserDBUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        catch(NullPointerException e){
+            e.printStackTrace();
+            setWarningMsg("해당하는 Lecture id가 존재하지 않습니다.");
+            return null;
         }
         return lectures;
     }

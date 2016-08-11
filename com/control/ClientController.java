@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ClientController {
     UserDBUtil userDBUtil;
     private static ClientController instance = new ClientController();
-    private Session session=null;
+    private Session session=new Session();
     Assign assign = null;
     LogIn login = null;
     SignUp signUp = null;
