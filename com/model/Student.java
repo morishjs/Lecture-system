@@ -13,11 +13,11 @@ public class Student extends Person{
     }
 
     public String getLecture() {
-        return lecture.getLectureName();
+        return lecture.getLectureId();
     }
 
     public String getPasswd() {
-        return this.getPasswd();
+        return this.passwd;
     }
 
     @Override

@@ -5,7 +5,7 @@ package com.model;
  */
 abstract public class Person {
     private String id;
-    private String passwd;
+    protected String passwd;
     private String name;
     protected String type;
 

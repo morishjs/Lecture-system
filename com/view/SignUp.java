@@ -71,9 +71,9 @@ public class SignUp extends JFrame implements ActionListener{
 		jp4.add(sameConfirm);
 		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-		model.addElement("강좌1");
-		model.addElement("강좌2");
-		model.addElement("강좌3");
+		model.addElement("java");
+		model.addElement("spring");
+		model.addElement("oracle");
 		lectBox = new JComboBox<String>(model);
 		
 		JPanel jp5 = new JPanel(new FlowLayout(FlowLayout.LEFT));

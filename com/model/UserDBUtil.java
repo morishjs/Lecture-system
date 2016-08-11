@@ -146,8 +146,8 @@ public class UserDBUtil {
 
     //DB에 학생정보를 등록함.
     public void addNewStudent(Student student) {
-        String sql = "insert into student value(?, ?, ?, ?)";
-        String[] info = new String[]{student.getId(),student.getName(),student.getLecture(),student.getPasswd()};
+        String sql = "insert into student values(?, ?, ?, ?)";
+        String[] info = new String[]{student.getId(),student.getName(),student.getPasswd(),student.getLecture()};
         sqlTransaction(sql,info);
     }
 
