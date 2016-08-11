@@ -1,5 +1,7 @@
 package com.model;
 
+import com.control.ClientController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
@@ -53,6 +55,7 @@ public class UserDBUtil {
             }
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
         return resultSet;
@@ -68,8 +71,10 @@ public class UserDBUtil {
             String[] info = new String[]{id, passwd};
             resultSet = sqlTransaction(sql, info);
             while (resultSet.next()) {
+                student = new Student();
                 student.setId(resultSet.getString(1));
                 student.setName(resultSet.getString(2));
+                student.setLecture(new Lecture(resultSet.getString(4)));
             }
 
         } catch (SQLException e) {
@@ -128,27 +133,36 @@ public class UserDBUtil {
     public ArrayList<Assignment> getAssignment(String lectureId) {
         ArrayList<Assignment> assignments = new ArrayList<>();
         ResultSet resultSet = null;
+        Assignment assignment = null;
+
         String sql = "select * from assignment where lecture_id=?";
         String[] info = new String[]{lectureId};
         resultSet = sqlTransaction(sql, info);
+
         try {
             while (resultSet.next()) {
-                Assignment assignment = null;
+                assignment = new Assignment();
                 assignment.setAssignmentName(resultSet.getString(1));
                 assignment.setAssignmentDeadlline(resultSet.getString(2));
+                assignment.setAssignmentDescription(resultSet.getString(4));
                 assignments.add(assignment);
             }
         } catch (SQLException e) {
+            setWarningMsg("Assignment가 존재하지 않습니다.");
             e.printStackTrace();
+            return null;
         }
         return assignments;
     }
 
     //DB에 학생정보를 등록함.
-    public void addNewStudent(Student student) {
+    public int addNewStudent(Student student) {
         String sql = "insert into student values(?, ?, ?, ?)";
         String[] info = new String[]{student.getId(),student.getName(),student.getPasswd(),student.getLecture()};
-        sqlTransaction(sql,info);
+        if(sqlTransaction(sql,info) == null){
+            return ClientController.STUDENT_REG_ERROR;
+        }
+        else return ClientController.RESULT_OK;
     }
 
 

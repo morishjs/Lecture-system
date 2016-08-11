@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,12 +22,12 @@ import javax.swing.JTextField;
 
 import com.control.ClientController;
 
-public class SignUp extends JFrame implements ActionListener{
+public class SignUp extends JFrame implements ActionListener, MouseListener{
 	
 	JTextField inputJumin1,inputJumin2,inputName,inputId,pwConfirm, sameConfirm;
 	JPasswordField inputPw, reInputPw;
 	JComboBox<String> lectBox;
-	JButton signUpBtn, dupliConfirmBtn, confirmBtn1, confirmBtn2;
+	JButton signUpBtn, dupliConfirmBtn,confirmBtn;
 	String nameT;
 	String idT;
 	String pwT;
@@ -40,34 +43,31 @@ public class SignUp extends JFrame implements ActionListener{
 		jp1.add(inputName);
 		
 		inputId = new JTextField(15);
-		dupliConfirmBtn = new JButton("중복확인");
+		
 		
 		JPanel jp2=new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jp2.add(new JLabel("아이디 "));
 		jp2.add(inputId);
-		jp2.add(dupliConfirmBtn);
 		jp2.add(new JLabel("안내받은 숫자 ID를 입력"));
 		
-		confirmBtn1 = new JButton("확인");
+		
 		inputPw = new JPasswordField(15);
 		inputPw.setEchoChar('*');
-		pwConfirm = new JTextField("6~12자리를 입력하세요.",20);	
-		confirmBtn2 = new JButton("확인");
-		
+	
 		JPanel jp3= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jp3.add(new JLabel("비밀번호 "));
 		jp3.add(inputPw);
-		jp3.add(confirmBtn1);
-		jp3.add(pwConfirm);
+	
+		jp3.add(new JLabel("6~12자리를 입력하세요."));
 		
 		reInputPw = new JPasswordField(15);
 		reInputPw.setEchoChar('*');//비밀번호를 *로 입력되게
 		sameConfirm = new JTextField("일치하지 않습니다.",20);
-		
+		confirmBtn = new JButton("확인");
 		JPanel jp4= new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jp4.add(new JLabel("비밀번호 확인 "));
 		jp4.add(reInputPw);
-		jp4.add(confirmBtn2);
+		jp4.add(confirmBtn);
 		jp4.add(sameConfirm);
 		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
@@ -86,12 +86,15 @@ public class SignUp extends JFrame implements ActionListener{
 		setLayout(new GridLayout(6, 1));
 		add(jp1); add(jp2); add(jp3); add(jp4); add(jp5); add(jp6); 
 		
+		//inputPw.addMouseListener(this);
+		confirmBtn.addMouseListener(this);
 		
+		//////
 		signUpBtn.addActionListener(this);
 		
 		setSize(600,600);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		
 	}
@@ -99,11 +102,15 @@ public class SignUp extends JFrame implements ActionListener{
 	public void setMessage(String msg) {
 		JLabel label = new JLabel(msg);
 		JOptionPane.showMessageDialog(this, label);
+		
 	}// end setMessage
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();
+		ClientController clientController = ClientController.getInstance();
 		if(obj==signUpBtn){
 			nameT = inputName.getText().trim();
 			idT = inputId.getText().trim();
@@ -115,13 +122,72 @@ public class SignUp extends JFrame implements ActionListener{
 				setMessage("모든 항목을 입력하십시오");
 				return;
 			}
-			ClientController clientController = ClientController.getInstance();
-			clientController.signup(idT,nameT,pwT,lectureT);
-			//new SignUpCheck(nameT,idT,pwT,lectureT);
+			// 모든 항목을 입력했을때 
+			if (nameT.length()>=1 && idT.length()>=1 && pwT.length()>=1 && lectureT.length()>=1) {
+
+				switch (clientController.signup(idT,nameT,pwT,lectureT)){
+					case ClientController.RESULT_OK:
+						setMessage("등록완료");
+						break;
+					case ClientController.LECTURE_NO_EXIST:
+						setMessage("강좌가 존재하지 않습니다.");
+						break;
+					case ClientController.STUDENT_REG_ERROR:
+						setMessage("회원가입을 할 수 없습니다.");
+				}
+				return;
+
+			}
+
+
+
 			
 		}
 		
 	}//end SignUpWindow()
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		Object obj = e.getSource();
+		if(obj==confirmBtn){
+			/*String pwd = inputPw.getText().trim();
+			String rpwd = reInputPw.getText().trim();
+			ClientController clientController = ClientController.getInstance();
+			String me=clientController.PWCheck(pwd, rpwd);
+			sameConfirm.setText(me);*/
+			
+			if(reInputPw.getText().equals(inputPw.getText()))
+				sameConfirm.setText("일치합니다.");
+			else
+				sameConfirm.setText("일치하지않습니다..");
+		}
+			
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 //public class SignUp {
 //

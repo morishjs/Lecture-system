@@ -6,6 +6,11 @@ package com.model;
 public class Assignment {
     private String assignmentDeadlline;
     private String assignmentName;
+    private String assignmentDescription;
+
+    public void setAssignmentDescription(String assignmentDescription) {
+        this.assignmentDescription = assignmentDescription;
+    }
 
     public void setAssignmentDeadlline(String assignmentDeadlline) {
         this.assignmentDeadlline = assignmentDeadlline;
@@ -14,4 +19,5 @@ public class Assignment {
     public void setAssignmentName(String assignmentName) {
         this.assignmentName = assignmentName;
     }
+
 }

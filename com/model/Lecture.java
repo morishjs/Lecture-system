@@ -23,6 +23,11 @@ public class Lecture {
         this.lectureName = lectureName;
     }
 
+    public Lecture(String lectureId) {
+        this.lectureId = lectureId;
+
+    }
+
     public void setLectureId(String lectureId) {
         this.lectureId = lectureId;
 

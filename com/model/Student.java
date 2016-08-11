@@ -19,11 +19,8 @@ public class Student extends Person{
     public String getPasswd() {
         return this.passwd;
     }
-
     @Override
     public String getType(){
         return type;
     }
-
-
 }
