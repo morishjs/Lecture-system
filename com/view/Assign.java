@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +16,7 @@ import javax.swing.JTextField;
 import com.control.ClientController;
 import com.model.Session;
 
-class Assigns extends JFrame implements ActionListener{
+public class Assign extends JFrame implements ActionListener{
 	JLabel lecture, lecturer,assignmentex,deadline,uploadfile,explanation;
 	JTextArea assignta,explanta;
 	JTextField fileRo;
@@ -22,8 +24,12 @@ class Assigns extends JFrame implements ActionListener{
 	String lecname,lecrname,deaddate;
 	boolean checkType;
 	ClientController controller = ClientController.getInstance();
-	public Assigns(){
+	int index;
+	
+	
+	public Assign(int index){
 		Session session = controller.getSession();
+		this.index = index;
 		
 		this.setTitle("과제제출");
 		lecture = new JLabel("강의명 : "+lecname);
@@ -60,6 +66,7 @@ class Assigns extends JFrame implements ActionListener{
 		
 		
 		chbtn.addActionListener(this);
+		okbtn.addActionListener(this);
 		setLayout(null);
 		lecture.setBounds(0,0,400,30);
 		chbtn.setBounds(300, 185, 90, 20);
@@ -93,25 +100,41 @@ class Assigns extends JFrame implements ActionListener{
 		add(okbtn);
 		add(canbtn);
 		
-	
 		
 		setBounds(200, 200, 400, 450);
 		setVisible(true);
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				SwingCalender.chk = true;
+				dispose();
+				
+			}
+		});
+		
+		
 	}
-
+	public int getIndex(){
+		return this.index;
+	}
+	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		new Assignckeck();
-	}
-}
-
-
-public class Assign extends JFrame {
-
-	public static void main(String[] args) {
-		new Assigns();
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == chbtn) {
+			new Assignckeck();
+		}else if(obj ==okbtn){
+			ClientController clientController = ClientController.getInstance();
+			SwingCalender swingCalender = clientController.getCalender();
+			swingCalender.setButtonColor(getIndex());
+			SwingCalender.chk = true;
+			dispose();
+			
+		}
+		
+		
 	}
 
 }

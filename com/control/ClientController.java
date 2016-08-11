@@ -132,6 +132,9 @@ public class ClientController {
     }//end showSignUpView()
 
     public void showCalender() {
-        new SwingCalender();
+        swingCalender = new SwingCalender();
+    }
+    public SwingCalender getCalender(){
+    	return swingCalender;
     }
 }

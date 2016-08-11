@@ -29,6 +29,12 @@ abstract public class Person {
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    public void setType(String type){
+    	this.type = type;
+    }
+    
     public abstract String getType();
+    
+    
 }
