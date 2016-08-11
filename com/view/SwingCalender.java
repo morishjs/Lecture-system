@@ -30,6 +30,7 @@ public class SwingCalender extends JFrame implements ActionListener
 	BorderLayout bLayout = new BorderLayout();
 	ClientController cc = ClientController.getInstance();
 	static boolean chk = true;
+
 	// 화면
 	public SwingCalender() {
 		//
@@ -64,7 +65,7 @@ public class SwingCalender extends JFrame implements ActionListener
 		btnBefore.addActionListener(this);
 		btnAfter.addActionListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 닫기
-		setTitle("Login : " + ss.getId() + "/" + ss.getType() +"용");
+		setTitle("Login : " + ss.getId() + "/" + ss.getType() + "용");
 		setBounds(200, 200, 400, 440); // 화면 크기 조절
 		setResizable(false);
 		setVisible(true);
@@ -114,7 +115,7 @@ public class SwingCalender extends JFrame implements ActionListener
 	}// end Calset()
 
 	public void actionPerformed(ActionEvent ae) {
-		
+
 		if (ae.getSource() == btnBefore) {
 			this.panWest.removeAll();
 			calInput(-1);
@@ -135,18 +136,18 @@ public class SwingCalender extends JFrame implements ActionListener
 			this.txtMonth.setText(month + "월");
 		} else if (Integer.parseInt(ae.getActionCommand()) >= 1 && Integer.parseInt(ae.getActionCommand()) <= 31) {
 			day = Integer.parseInt(ae.getActionCommand());
-			
+
 			if (chk == true) {
-				Assign as = new Assign();
+				Assign as = new Assign(day);
 				chk = false;
 			} else if (chk == false) {
 				JOptionPane.showMessageDialog(this, "기존 창을 닫으신 후 다시 시도해주세요");
 			}
-			 System.out.println(+year + "-" + month + "-" + day); //클릭한 날짜의 년-월-일 출력			 
-
-			 calSet();
+			System.out.println(+year + "-" + month + "-" + day); // 클릭한 날짜 년월일
+					
+			calSet();
 		}
-		
+
 	}// end actionperformed()
 
 	public void hideInit() {
@@ -183,6 +184,12 @@ public class SwingCalender extends JFrame implements ActionListener
 			year = year + 1;
 		}
 	}// end calInput()
+
+	public void setButtonColor(int index) {
+		// TODO Auto-generated method stub
+		calBtn[index+7].setBackground(new Color(0,255,0));
+		calBtn[index+7].setOpaque(true);
+	}
 }// end class
 
 // public class Calender{
