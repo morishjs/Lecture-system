@@ -6,28 +6,35 @@ import java.util.*;
 import java.io.*;
 import javax.swing.*;
 
+import com.control.ClientController;
+import com.model.Session;
+
 public class SwingCalender extends JFrame implements ActionListener
 
 {
 	String[] days = { "월", "화", "수", "목", "금", "토", "일" };
 	int year, month, day, todays, memoday = 0;
-	//Font f;
+	// Font f;
 	Color bc, fc;
 	Calendar today;
 	Calendar cal;
 	JButton btnBefore, btnAfter;
 	JButton[] calBtn = new JButton[49];
-	JLabel thing;
-	JLabel time;
+	JLabel id;
+	JLabel type;
 	JPanel panWest;
 	JPanel panSouth;
 	JPanel panNorth;
 	JTextField txtMonth, txtYear;
 	JTextField txtTime;
 	BorderLayout bLayout = new BorderLayout();
-
+	ClientController cc = ClientController.getInstance();
+	static boolean chk = true;
 	// 화면
 	public SwingCalender() {
+		//
+		Session ss = cc.getSession();
+		//
 		today = Calendar.getInstance();
 		cal = new GregorianCalendar();
 		year = today.get(Calendar.YEAR);
@@ -39,13 +46,16 @@ public class SwingCalender extends JFrame implements ActionListener
 		txtYear.setEnabled(false);
 		txtMonth.setEnabled(false);
 		panNorth.add(btnAfter = new JButton("After"));
-		//f = new Font("Sherif", Font.BOLD, 18);
-		//txtYear.setFont(f);
-		//txtMonth.setFont(f);
-		add(panNorth, "North");
 		//
+		panNorth.add(type = new JLabel(ss.getType()));
+		//
+		// f = new Font("Sherif", Font.BOLD, 18);
+		// txtYear.setFont(f);
+		// txtMonth.setFont(f);
+		add(panNorth, "North");
+
 		panWest = new JPanel(new GridLayout(7, 7));//
-		//f = new Font("Sherif", Font.BOLD, 12);
+		// f = new Font("Sherif", Font.BOLD, 12);
 		gridInit();
 		calSet();
 		hideInit();
@@ -53,8 +63,8 @@ public class SwingCalender extends JFrame implements ActionListener
 
 		btnBefore.addActionListener(this);
 		btnAfter.addActionListener(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //닫기
-		setTitle("과제");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 닫기
+		setTitle("Login : " + ss.getId() + "/" + ss.getType() +"용");
 		setBounds(200, 200, 400, 440); // 화면 크기 조절
 		setResizable(false);
 		setVisible(true);
@@ -64,21 +74,21 @@ public class SwingCalender extends JFrame implements ActionListener
 		cal.set(Calendar.YEAR, year);
 		cal.set(Calendar.MONTH, (month - 1));
 		cal.set(Calendar.DATE, 1);
-	
+
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 		int j = 0;
 		int hopping = 0;
 		calBtn[0].setForeground(new Color(255, 0, 0));// 0번째 빨간색 - 일
 		calBtn[6].setForeground(new Color(0, 0, 255));// 6번째 파란색 - 토
-		
+
 		for (int i = cal.getFirstDayOfWeek(); i < dayOfWeek; i++) {
 			j++;
 		}
 		hopping = j;
-		
+
 		for (int kk = 0; kk < hopping; kk++) {
-			
+
 			calBtn[kk + 7].setText("");
 		}
 		for (int i = cal.getMinimum(Calendar.DAY_OF_MONTH); i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++) {
@@ -89,14 +99,14 @@ public class SwingCalender extends JFrame implements ActionListener
 
 			todays = i;
 			if (memoday == 1) {
-				calBtn[i + 6 + hopping].setForeground(new Color(0, 255, 0)); 
+				calBtn[i + 6 + hopping].setForeground(new Color(0, 255, 0));
 			} else {
 				calBtn[i + 6 + hopping].setForeground(new Color(0, 0, 0));
 				if ((i + hopping - 1) % 7 == 0) {
-					calBtn[i + 6 + hopping].setForeground(new Color(255, 0, 0)); // 숫자 색
+					calBtn[i + 6 + hopping].setForeground(new Color(255, 0, 0)); // 숫자색
 				}
 				if ((i + hopping) % 7 == 0) {
-					calBtn[i + 6 + hopping].setForeground(new Color(0, 0, 255)); // 숫자 색
+					calBtn[i + 6 + hopping].setForeground(new Color(0, 0, 255)); // 숫자색
 				}
 			}
 			calBtn[i + 6 + hopping].setText((i) + "");
@@ -104,6 +114,7 @@ public class SwingCalender extends JFrame implements ActionListener
 	}// end Calset()
 
 	public void actionPerformed(ActionEvent ae) {
+		
 		if (ae.getSource() == btnBefore) {
 			this.panWest.removeAll();
 			calInput(-1);
@@ -124,9 +135,18 @@ public class SwingCalender extends JFrame implements ActionListener
 			this.txtMonth.setText(month + "월");
 		} else if (Integer.parseInt(ae.getActionCommand()) >= 1 && Integer.parseInt(ae.getActionCommand()) <= 31) {
 			day = Integer.parseInt(ae.getActionCommand());
-			System.out.println(+year + "-" + month + "-" + day); //클릭한 날짜의 년-월-일 출력
-			calSet();
+			
+			if (chk == true) {
+				Assign as = new Assign();
+				chk = false;
+			} else if (chk == false) {
+				JOptionPane.showMessageDialog(this, "기존 창을 닫으신 후 다시 시도해주세요");
+			}
+			 System.out.println(+year + "-" + month + "-" + day); //클릭한 날짜의 년-월-일 출력			 
+
+			 calSet();
 		}
+		
 	}// end actionperformed()
 
 	public void hideInit() {
@@ -165,10 +185,10 @@ public class SwingCalender extends JFrame implements ActionListener
 	}// end calInput()
 }// end class
 
-//public class Calender{
-//	public static void main(String[] args) {
-//		SwingCalender jdbc = new SwingCalender();
+// public class Calender{
+// public static void main(String[] args) {
+// SwingCalender jdbc = new SwingCalender();
 //
-//	}
+// }
 //
-//}
+// }
