@@ -110,6 +110,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj=e.getSource();
+		ClientController clientController = ClientController.getInstance();
 		if(obj==signUpBtn){
 			nameT = inputName.getText().trim();
 			idT = inputId.getText().trim();
@@ -123,12 +124,23 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
 			}
 			// 모든 항목을 입력했을때 
 			if (nameT.length()>=1 && idT.length()>=1 && pwT.length()>=1 && lectureT.length()>=1) {
-				setMessage("등록완료");
+
+				switch (clientController.signup(idT,nameT,pwT,lectureT)){
+					case ClientController.RESULT_OK:
+						setMessage("등록완료");
+						break;
+					case ClientController.LECTURE_NO_EXIST:
+						setMessage("강좌가 존재하지 않습니다.");
+						break;
+					case ClientController.STUDENT_REG_ERROR:
+						setMessage("회원가입을 할 수 없습니다.");
+				}
 				return;
+
 			}
-			ClientController clientController = ClientController.getInstance();
-			clientController.signup(idT,nameT,pwT,lectureT);
-			//new SignUpCheck(nameT,idT,pwT,lectureT);
+
+
+
 			
 		}
 		
@@ -146,6 +158,8 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
 			
 			if(reInputPw.getText().equals(inputPw.getText()))
 				sameConfirm.setText("일치합니다.");
+			else
+				sameConfirm.setText("일치하지않습니다..");
 		}
 			
 		

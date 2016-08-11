@@ -1,5 +1,7 @@
 package com.model;
 
+import com.control.ClientController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
@@ -53,6 +55,7 @@ public class UserDBUtil {
             }
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
         return resultSet;
@@ -147,10 +150,13 @@ public class UserDBUtil {
     }
 
     //DB에 학생정보를 등록함.
-    public void addNewStudent(Student student) {
+    public int addNewStudent(Student student) {
         String sql = "insert into student values(?, ?, ?, ?)";
         String[] info = new String[]{student.getId(),student.getName(),student.getPasswd(),student.getLecture()};
-        sqlTransaction(sql,info);
+        if(sqlTransaction(sql,info) == null){
+            return ClientController.STUDENT_REG_ERROR;
+        }
+        else return ClientController.RESULT_OK;
     }
 
 

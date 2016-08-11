@@ -11,6 +11,11 @@ import java.util.ArrayList;
  * Created by Junsuk on 2016-08-09.
  */
 public class ClientController {
+
+    public static final int RESULT_OK = 1;
+    public static final int LECTURE_NO_EXIST = 2;
+    public static final int STUDENT_REG_ERROR = 3;
+
     UserDBUtil userDBUtil;
     private static ClientController instance = new ClientController();
     private Session session=new Session();
@@ -74,16 +79,22 @@ public class ClientController {
     }
 
     //회원가입.
-    public void signup(String id, String name, String pw, String lectureCode) {
+    public int signup(String id, String name, String pw, String lectureCode) {
         //Insert data into the database.
-
+        int result;
         Student student = new Student();
         student.setId(id);
         student.setName(name);
         student.setPasswd(pw);
         ArrayList<Lecture> lecture = userDBUtil.getLectures(lectureCode);
-        student.setLecture(lecture.get(0));
-        userDBUtil.addNewStudent(student);
+        if (lecture == null) {
+            result = LECTURE_NO_EXIST;
+        }
+        else {
+            student.setLecture(lecture.get(0));
+            result = userDBUtil.addNewStudent(student);
+        }
+        return result;
 
         //TODO: Signup
         //Step1. Inflate the view of signup.
