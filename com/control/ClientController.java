@@ -131,8 +131,8 @@ public class ClientController {
         new SignUp();
     }//end showSignUpView()
 
-    public void showCalender() {
-        swingCalender = new SwingCalender();
+    public void showCalender(Lecture lecture, ArrayList<Assignment> assignments) {
+            swingCalender = new SwingCalender(lecture,assignments);
     }
     public SwingCalender getCalender(){
     	return swingCalender;

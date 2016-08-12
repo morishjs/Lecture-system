@@ -1,6 +1,8 @@
 package com.view;
 
 import com.control.*;
+import com.model.Assignment;
+import com.model.Lecture;
 import com.model.Lecturer;
 import com.model.Student;
 
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.text.Document;
@@ -87,7 +90,7 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 					//세션 설정
 					cc.setSession(lecturer);
 					//캘린더 출력해야함.
-					cc.showCalender();
+					//cc.showCalender();
 				}
 
 			} else if (studentBtn.isSelected()) {
@@ -99,8 +102,14 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 					//세션 설정
 					student.setType("학생");
 					cc.setSession(student);
-					//캘린더 출력해야함
-					cc.showCalender();
+					//student에게 할당된 과제들을 불러와서 캘린더에 추가해야함.
+					Lecture lecture = student.getLectureObj();
+					ArrayList<Assignment> assignments = null;
+					if(lecture != null){
+						assignments = lecture.getAssignmentList();
+						cc.showCalender(lecture,assignments);
+					}
+
 				}
 			}
 			

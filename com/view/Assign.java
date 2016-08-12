@@ -25,8 +25,11 @@ public class Assign extends JFrame implements ActionListener{
 	boolean checkType;
 	ClientController controller = ClientController.getInstance();
 	int index;
-	
-	
+	private String deadLine;
+	private String description;
+	private String name;
+
+
 	public Assign(int index){
 		Session session = controller.getSession();
 		this.index = index;
@@ -133,8 +136,20 @@ public class Assign extends JFrame implements ActionListener{
 			dispose();
 			
 		}
-		
-		
 	}
 
+	public void setAssignmentDeadline(String assignmentDeadline) {
+		this.deadLine = assignmentDeadline;
+		deadline.setText(this.deadLine);
+	}
+
+	public void setAssignmentDescription(String assignmentDescription) {
+		this.description = assignmentDescription;
+		assignta.setText(this.description);
+	}
+
+	public void setAssignmentName(String assignmentName) {
+		this.name = assignmentName;
+		assignment_nametf.setText(this.name);
+	}
 }

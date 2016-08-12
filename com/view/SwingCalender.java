@@ -7,11 +7,17 @@ import java.io.*;
 import javax.swing.*;
 
 import com.control.ClientController;
+import com.model.Assignment;
+import com.model.Lecture;
 import com.model.Session;
 
 public class SwingCalender extends JFrame implements ActionListener
 
 {
+
+	HashMap<Integer, Assignment> info;
+
+
 	String[] days = { "월", "화", "수", "목", "금", "토", "일" };
 	int year, month, day, todays, memoday = 0;
 	// Font f;
@@ -32,9 +38,10 @@ public class SwingCalender extends JFrame implements ActionListener
 	static boolean chk = true;
 
 	// 화면
-	public SwingCalender() {
+	public SwingCalender(Lecture lecture, ArrayList<Assignment> assignments) {
 		//
 		Session ss = cc.getSession();
+		info = new HashMap<>();
 		//
 		today = Calendar.getInstance();
 		cal = new GregorianCalendar();
@@ -69,6 +76,25 @@ public class SwingCalender extends JFrame implements ActionListener
 		setBounds(200, 200, 400, 440); // 화면 크기 조절
 		setResizable(false);
 		setVisible(true);
+
+		//Assignment를 캘린더에 출력한다.
+		if(assignments != null){
+			for (Assignment assignment : assignments) {
+				String deadLine = assignment.getAssignmentDeadlline();
+				String[] date = deadLine.split("-");
+				String day = date[2];
+				int index = Integer.parseInt(day);
+
+				//버튼 색상 변경
+				setButtonColor(index);
+				//각 날짜에 과제들을 추가한다. 이후에 버튼을 눌렀을 때 info로부터 assignment의 정보를 가져온다.
+				info.put(index, assignment);
+
+			}
+		}
+
+
+
 	}// end constuctor
 
 	public void calSet() {
@@ -140,11 +166,22 @@ public class SwingCalender extends JFrame implements ActionListener
 			if (chk == true) {
 				Assign as = new Assign(day);
 				chk = false;
+				//info에서 assigment 정보를 가져온다.
+				Assignment assignment = info.get(day);
+				//정보를 가져와서 assign에 정보를 출력한다.
+				if(assignment != null) {
+					as.setAssignmentDeadline(assignment.getAssignmentDeadlline());
+					as.setAssignmentDescription(assignment.getAssignmentDescription());
+					as.setAssignmentName(assignment.getAssignmentName());
+				}
+
 			} else if (chk == false) {
 				JOptionPane.showMessageDialog(this, "기존 창을 닫으신 후 다시 시도해주세요");
 			}
 			System.out.println(+year + "-" + month + "-" + day); // 클릭한 날짜 년월일
-					
+
+
+
 			calSet();
 		}
 

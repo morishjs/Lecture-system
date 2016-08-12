@@ -20,4 +20,15 @@ public class Assignment {
         this.assignmentName = assignmentName;
     }
 
+    public String getAssignmentDeadlline() {
+        return assignmentDeadlline;
+    }
+
+    public String getAssignmentName() {
+        return assignmentName;
+    }
+
+    public String getAssignmentDescription() {
+        return assignmentDescription;
+    }
 }

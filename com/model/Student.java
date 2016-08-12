@@ -16,6 +16,11 @@ public class Student extends Person{
         return lecture.getLectureId();
     }
 
+    public Lecture getLectureObj() {
+        return lecture;
+    }
+
+
     public String getPasswd() {
         return this.passwd;
     }
