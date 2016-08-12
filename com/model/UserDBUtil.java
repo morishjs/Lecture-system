@@ -17,9 +17,9 @@ public class UserDBUtil {
 //    DriverManager driverManager;
     public Connection connection = null;
 
-    public static void setWarningMsg(String text){
+    public static void setWarningMsg(String text) {
         Toolkit.getDefaultToolkit().beep();
-        JOptionPane optionPane = new JOptionPane(text,JOptionPane.WARNING_MESSAGE);
+        JOptionPane optionPane = new JOptionPane(text, JOptionPane.WARNING_MESSAGE);
         JDialog dialog = optionPane.createDialog("Warning!");
         dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
@@ -51,7 +51,7 @@ public class UserDBUtil {
         try {
             statement = connection.prepareStatement(sql);
             for (int i = 1; i <= info.length; i++) {
-                statement.setString(i, info[i-1]);
+                statement.setString(i, info[i - 1]);
             }
             resultSet = statement.executeQuery();
         } catch (SQLException e) {
@@ -104,6 +104,8 @@ public class UserDBUtil {
         return lecturer;
     }
 
+    //id : lecturer id or student id(deprecated)
+    //id: lecture id
     public ArrayList<Lecture> getLectures(String id) {
         ArrayList<Lecture> lectures = new ArrayList<>();
         Lecture lecture = null;
@@ -121,8 +123,7 @@ public class UserDBUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             setWarningMsg("해당하는 Lecture id가 존재하지 않습니다.");
             return null;
@@ -158,11 +159,35 @@ public class UserDBUtil {
     //DB에 학생정보를 등록함.
     public int addNewStudent(Student student) {
         String sql = "insert into student values(?, ?, ?, ?)";
-        String[] info = new String[]{student.getId(),student.getName(),student.getPasswd(),student.getLecture()};
-        if(sqlTransaction(sql,info) == null){
+        String[] info = new String[]{student.getId(), student.getName(), student.getPasswd(), student.getLecture()};
+        if (sqlTransaction(sql, info) == null) {
             return ClientController.STUDENT_REG_ERROR;
+        } else return ClientController.RESULT_OK;
+    }
+
+    public ArrayList<Lecture> getLectures(Lecturer lecturer) {
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        Lecture lecture = null;
+        ResultSet resultSet = null;
+        String sql = "select * from LECTURE where LECTURER_ID=?";
+        String[] info = new String[]{lecturer.getId()};
+        resultSet = sqlTransaction(sql, info);
+        try {
+            while (resultSet.next()) {
+                String lectureId = resultSet.getString(1);
+                String lectureClass = resultSet.getString(2);
+                String lectureName = resultSet.getString(3);
+                lecture = new Lecture(lectureId, lectureClass, lectureName);
+                lectures.add(lecture);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            setWarningMsg("해당하는 Lecture id가 존재하지 않습니다.");
+            return null;
         }
-        else return ClientController.RESULT_OK;
+        return lectures;
     }
 
 

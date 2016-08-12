@@ -38,7 +38,7 @@ public class SwingCalender extends JFrame implements ActionListener
 	static boolean chk = true;
 
 	// 화면
-	public SwingCalender(Lecture lecture, ArrayList<Assignment> assignments) {
+	public SwingCalender(ArrayList<Lecture> lectures) {
 		//
 		Session ss = cc.getSession();
 		info = new HashMap<>();
@@ -78,17 +78,21 @@ public class SwingCalender extends JFrame implements ActionListener
 		setVisible(true);
 
 		//Assignment를 캘린더에 출력한다.
-		if(assignments != null){
-			for (Assignment assignment : assignments) {
-				String deadLine = assignment.getAssignmentDeadlline();
-				String[] date = deadLine.split("-");
-				String day = date[2];
-				int index = Integer.parseInt(day);
+		if(lectures != null){
+			for (Lecture lecture : lectures) {
+				for (Assignment assignment : lecture.getAssignmentList()) {
+					String deadLine = assignment.getAssignmentDeadlline();
+					String[] date = deadLine.split("-");
+					String day = date[2];
+					int index = Integer.parseInt(day);
+					//버튼 색상 변경
+					setButtonColor(index);
+					//각 날짜에 과제들을 추가한다. 이후에 버튼을 눌렀을 때 info로부터 assignment의 정보를 가져온다.
+					info.put(index, assignment);
 
-				//버튼 색상 변경
-				setButtonColor(index);
-				//각 날짜에 과제들을 추가한다. 이후에 버튼을 눌렀을 때 info로부터 assignment의 정보를 가져온다.
-				info.put(index, assignment);
+				}
+
+
 
 			}
 		}

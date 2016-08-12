@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.text.Document;
@@ -43,9 +44,6 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 		idTxt = new JTextField("아이디", 15);
 		passwordTxt = new JPasswordField("비밀번호", 15);
 		passwordTxt.setEchoChar((char)0);
-		
-	
-
 
 		JPanel jp2= new JPanel();
 		jp2.add(idTxt);
@@ -90,7 +88,18 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 					//세션 설정
 					cc.setSession(lecturer);
 					//캘린더 출력해야함.
-					//cc.showCalender();
+
+					HashMap<String,Lecture> lectures = lecturer.getLectureObj();
+					ArrayList<Lecture> lectureList = new ArrayList<>();
+					if(lectures != null){
+						for(String key : lectures.keySet()) {
+							Lecture lecture = lectures.get(key);
+//							lectureList.add(lecture);
+							//강사는 강좌를 여러 개 맡고 있다.
+							lectureList.add(lecture);
+						}
+						cc.showCalender(lectureList);
+					}
 				}
 
 			} else if (studentBtn.isSelected()) {
@@ -104,10 +113,12 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 					cc.setSession(student);
 					//student에게 할당된 과제들을 불러와서 캘린더에 추가해야함.
 					Lecture lecture = student.getLectureObj();
-					ArrayList<Assignment> assignments = null;
+					ArrayList<Lecture> lectures = new ArrayList<>();
+					lectures.add(lecture);
+
 					if(lecture != null){
-						assignments = lecture.getAssignmentList();
-						cc.showCalender(lecture,assignments);
+						ArrayList<Lecture> lectureList = new ArrayList<>();
+						cc.showCalender(lectures);
 					}
 
 				}
@@ -158,15 +169,6 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 	}
 }//end LogInWindow
 
-//public class LogIn {
-//
-
-//	public static void main(String[] args) {
-//		new LogInWindow();
-//
-//	}
-//
-//}
 
 
 

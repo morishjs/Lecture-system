@@ -107,19 +107,26 @@ public class ClientController {
     public Lecturer l_Login(String id, String passwd){
         Lecturer lecturer = userDBUtil.getLecturer(id,passwd);
         ArrayList<Lecture> lectures = null;
-        ArrayList<Assignment> assignments = new ArrayList<>();
+        ArrayList<Assignment> assignments = null;
 
         if(lecturer == null)
             return null;
         else{
-            lectures = userDBUtil.getLectures(id);
+            //lecturer가 담당하고 있는 lecture들을 lectures 에 add에 해줘야 함.
+            lectures = userDBUtil.getLectures(lecturer);
+//            lectures 에 assignment를 할당해줘야함.
             if(lectures == null)
                 return null;
             else{
+                lecturer.setLectures(lectures);
+                int i = 0;
                 for (Lecture lecture : lectures) {
                     assignments = userDBUtil.getAssignment(lecture.getLectureId());
-                    lecture.setAssignmentList(assignments);
-                    lectures.add(lecture);
+                    if (assignments != null) {
+                        lecture.setAssignmentList(assignments);
+                        lectures.set(i, lecture);
+                        i++;
+                    }
                 }
                 lecturer.setLectures(lectures);
             }
@@ -131,8 +138,8 @@ public class ClientController {
         new SignUp();
     }//end showSignUpView()
 
-    public void showCalender(Lecture lecture, ArrayList<Assignment> assignments) {
-            swingCalender = new SwingCalender(lecture,assignments);
+    public void showCalender(ArrayList<Lecture> lecture) {
+            swingCalender = new SwingCalender(lecture);
     }
     public SwingCalender getCalender(){
     	return swingCalender;

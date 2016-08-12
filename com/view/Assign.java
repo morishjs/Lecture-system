@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import com.control.ClientController;
 import com.model.Session;
 
-class Assigns extends JFrame implements ActionListener {
+public class Assign extends JFrame implements ActionListener {
 	JLabel assignment_name, assignmentex, deadline, uploadfile;
 	JTextArea assignta;
 	JTextField fileRo, assignment_nametf;
@@ -30,17 +30,17 @@ class Assigns extends JFrame implements ActionListener {
 	private String description;
 	private String name;
 
-	public Assigns(int index) {
+	public Assign(int index) {
 		Session session = controller.getSession();
 		this.index = index;
-//		if (session.getType().equals("강사")) {
-//			checkType = true;
-//		} else {
-//			checkType = false;
-//		}
+		if (session.getType().equals("강사")) {
+			checkType = true;
+		} else {
+			checkType = false;
+		}
 
-//		deaddate = String.valueOf(swingCalender.year) + "-" + String.valueOf(swingCalender) + "-"
-//				+ String.valueOf(swingCalender.day);
+		deaddate = String.valueOf(swingCalender.year) + "-" + String.valueOf(swingCalender) + "-"
+				+ String.valueOf(swingCalender.day);
 
 		this.setTitle(lecname);
 		assignment_name = new JLabel("과제명 : ");
