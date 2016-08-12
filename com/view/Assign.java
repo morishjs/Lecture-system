@@ -16,126 +16,130 @@ import javax.swing.JTextField;
 import com.control.ClientController;
 import com.model.Session;
 
-public class Assign extends JFrame implements ActionListener{
-	JLabel lecture, lecturer,assignmentex,deadline,uploadfile,explanation;
-	JTextArea assignta,explanta;
-	JTextField fileRo;
+class Assigns extends JFrame implements ActionListener {
+	JLabel assignment_name, assignmentex, deadline, uploadfile;
+	JTextArea assignta;
+	JTextField fileRo, assignment_nametf;
 	JButton sebtn, okbtn, canbtn, chbtn;
-	String lecname,lecrname,deaddate;
+	String lecname, lecrname, deaddate;
 	boolean checkType;
 	ClientController controller = ClientController.getInstance();
+	SwingCalender swingCalender = controller.getCalender();
 	int index;
 	private String deadLine;
 	private String description;
 	private String name;
 
-
-	public Assign(int index){
+	public Assigns(int index) {
 		Session session = controller.getSession();
 		this.index = index;
-		
-		this.setTitle("과제제출");
-		lecture = new JLabel("강의명 : "+lecname);
-		lecturer = new JLabel("강사명 : "+lecrname);
+//		if (session.getType().equals("강사")) {
+//			checkType = true;
+//		} else {
+//			checkType = false;
+//		}
+
+//		deaddate = String.valueOf(swingCalender.year) + "-" + String.valueOf(swingCalender) + "-"
+//				+ String.valueOf(swingCalender.day);
+
+		this.setTitle(lecname);
+		assignment_name = new JLabel("과제명 : ");
 		assignmentex = new JLabel("과제 설명");
-		deadline = new JLabel("제출 기간 : "+deaddate);
+		deadline = new JLabel("제출 기간 : " + deaddate);
 		uploadfile = new JLabel("제출 파일 : ");
-		explanation = new JLabel("부가 설명?");
 		sebtn = new JButton("파일 제출");
+		chbtn = new JButton("제출 확인");
 		okbtn = new JButton("확인");
 		canbtn = new JButton("취소");
-		chbtn  = new JButton("제출 확인");
-		
-		//Jfilebtn.setPreferredSize(new Dimension(20, 20));
-		
+
 		Font font = new Font("sansSerif", 0, 12);
-		lecture.setFont(font);
-		lecturer.setFont(font);
+		assignment_name.setFont(font);
 		assignmentex.setFont(font);
 		deadline.setFont(font);
 		uploadfile.setFont(font);
-		explanation.setFont(font);
 		sebtn.setFont(font);
 		okbtn.setFont(font);
 		canbtn.setFont(font);
 		chbtn.setFont(font);
-		
+
 		assignta = new JTextArea();
-		assignta.setEditable(checkType);		
-		explanta = new JTextArea();
-		fileRo  = new JTextField(15)	;
-		
-		
-		
-		
+		fileRo = new JTextField(15);
+		assignment_nametf = new JTextField(15);
+
 		chbtn.addActionListener(this);
 		okbtn.addActionListener(this);
+		canbtn.addActionListener(this);
+
 		setLayout(null);
-		lecture.setBounds(0,0,400,30);
+		assignment_name.setBounds(0, 0, 50, 30);
+		assignment_nametf.setBounds(80, 5, 200, 20);
+		assignment_nametf.setBackground(Color.white);
 		chbtn.setBounds(300, 185, 90, 20);
-		lecturer.setBounds(0,30,400,30);
-		assignmentex.setBounds(0,60,400,30);
-		assignta.setBounds(0, 90, 400, 90);
-		deadline.setBounds(0,180,300,30);
-		
-		uploadfile.setBounds(0,210,80,40);
-		fileRo.setBounds(80,220,200,20);
-		fileRo.setEditable(false);
+
+		assignmentex.setBounds(0, 30, 400, 30);
+		assignta.setBounds(0, 70, 400, 90);
+		deadline.setBounds(0, 170, 300, 30);
+
+		uploadfile.setBounds(0, 200, 80, 40);
+		fileRo.setBounds(80, 210, 200, 20);
 		fileRo.setBackground(Color.white);
-		sebtn.setBounds(300,220,90,20);
-		
-		explanation.setBounds(0,250,400,30);
-		explanta.setBounds(0, 280, 400, 90);
-		okbtn.setBounds(100, 380, 70, 30);
-		canbtn.setBounds(230, 380, 70, 30);
-		
-		add(lecture);
+		sebtn.setBounds(300, 210, 90, 20);
+
+		okbtn.setBounds(110, 250, 70, 30);
+		canbtn.setBounds(220, 250, 70, 30);
+
+		assignment_nametf.setEditable(checkType);
+		assignta.setEditable(checkType);
+		chbtn.setVisible(checkType);
+		fileRo.setEditable(false);
+
+		add(assignment_name);
+		add(assignment_nametf);
 		add(chbtn);
-		add(lecturer);
 		add(assignmentex);
 		add(assignta);
 		add(deadline);
 		add(uploadfile);
 		add(fileRo);
 		add(sebtn);
-		add(explanation);
-		add(explanta);
 		add(okbtn);
 		add(canbtn);
-		
-		
-		setBounds(200, 200, 400, 450);
+
+		setBounds(200, 200, 400, 320);
 		setVisible(true);
 		setResizable(false);
-		
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
 				SwingCalender.chk = true;
 				dispose();
-				
 			}
 		});
-		
-		
+
 	}
-	public int getIndex(){
+
+	public int getIndex() {
 		return this.index;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		
-		if(obj == chbtn) {
+
+		if (obj == chbtn) {
 			new Assignckeck();
-		}else if(obj ==okbtn){
-			ClientController clientController = ClientController.getInstance();
-			SwingCalender swingCalender = clientController.getCalender();
+		} else if (obj == okbtn) {
 			swingCalender.setButtonColor(getIndex());
 			SwingCalender.chk = true;
+
 			dispose();
-			
+		} else if (obj == sebtn) {
+			System.out.println("마지막에 합시다.");
+		} else if (obj == canbtn) {
+			SwingCalender.chk = true;
+			dispose();
 		}
+
 	}
 
 	public void setAssignmentDeadline(String assignmentDeadline) {
@@ -153,3 +157,4 @@ public class Assign extends JFrame implements ActionListener{
 		assignment_nametf.setText(this.name);
 	}
 }
+
