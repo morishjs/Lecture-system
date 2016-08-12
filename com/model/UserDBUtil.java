@@ -190,6 +190,14 @@ public class UserDBUtil {
         return lectures;
     }
 
+    public int addNewAssignment(Assignment assignment, String lectureId) {
+        String sql = "insert into assignment values(?, ?, ?, ?)";
+        String[] info = new String[]{assignment.getAssignmentName(), assignment.getAssignmentDeadlline(), lectureId, assignment.getAssignmentDescription()};
+        if (sqlTransaction(sql, info) == null) {
+            return ClientController.ASSIGNMENT_REG_ERROR;
+        } else return ClientController.RESULT_OK;
+    }
+
 
     //Adding
 

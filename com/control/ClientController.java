@@ -15,6 +15,7 @@ public class ClientController {
     public static final int RESULT_OK = 1;
     public static final int LECTURE_NO_EXIST = 2;
     public static final int STUDENT_REG_ERROR = 3;
+    public static final int ASSIGNMENT_REG_ERROR = 4;
 
     UserDBUtil userDBUtil;
     private static ClientController instance = new ClientController();
@@ -144,4 +145,10 @@ public class ClientController {
     public SwingCalender getCalender(){
     	return swingCalender;
     }
+
+    public int registerAssignment(Assignment assignment, String lectureId) {
+        int result = userDBUtil.addNewAssignment(assignment, lectureId);
+        return  result;
+    }
+
 }

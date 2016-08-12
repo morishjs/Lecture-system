@@ -21,12 +21,10 @@ public class SwingCalender extends JFrame implements ActionListener
 	String[] days = { "월", "화", "수", "목", "금", "토", "일" };
 	int year, month, day, todays, memoday = 0;
 	// Font f;
-	Color bc, fc;
 	Calendar today;
 	Calendar cal;
 	JButton btnBefore, btnAfter;
 	JButton[] calBtn = new JButton[49];
-	JLabel id;
 	JLabel type;
 	JPanel panWest;
 	JPanel panSouth;
@@ -91,9 +89,6 @@ public class SwingCalender extends JFrame implements ActionListener
 					info.put(index, assignment);
 
 				}
-
-
-
 			}
 		}
 
@@ -230,6 +225,12 @@ public class SwingCalender extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		calBtn[index+7].setBackground(new Color(0,255,0));
 		calBtn[index+7].setOpaque(true);
+	}
+
+
+
+	public HashMap<Integer,Assignment> getAssignmentInfo() {
+		return info;
 	}
 }// end class
 

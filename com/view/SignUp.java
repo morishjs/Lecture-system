@@ -24,10 +24,10 @@ import com.control.ClientController;
 
 public class SignUp extends JFrame implements ActionListener, MouseListener{
 	
-	JTextField inputJumin1,inputJumin2,inputName,inputId,pwConfirm, sameConfirm;
+	JTextField inputName,inputId, sameConfirm;
 	JPasswordField inputPw, reInputPw;
 	JComboBox<String> lectBox;
-	JButton signUpBtn, dupliConfirmBtn,confirmBtn;
+	JButton signUpBtn, confirmBtn;
 	String nameT;
 	String idT;
 	String pwT;
@@ -48,9 +48,7 @@ public class SignUp extends JFrame implements ActionListener, MouseListener{
 		JPanel jp2=new JPanel(new FlowLayout(FlowLayout.LEFT));
 		jp2.add(new JLabel("아이디 "));
 		jp2.add(inputId);
-		jp2.add(new JLabel("안내받은 숫자 ID를 입력"));
-		
-		
+
 		inputPw = new JPasswordField(15);
 		inputPw.setEchoChar('*');
 	

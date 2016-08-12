@@ -7,17 +7,14 @@ import com.model.Lecturer;
 import com.model.Student;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.text.Document;
 
-public class LogIn extends JFrame implements ActionListener,MouseListener{
+public class LogIn extends JFrame implements ActionListener,MouseListener, KeyListener {
 
 	JRadioButton studentBtn, lecturerBtn;
 	JTextField idTxt;
@@ -45,6 +42,10 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 		passwordTxt = new JPasswordField("비밀번호", 15);
 		passwordTxt.setEchoChar((char)0);
 
+		idTxt.setFocusTraversalKeysEnabled(false);
+
+
+
 		JPanel jp2= new JPanel();
 		jp2.add(idTxt);
 		jp2.add(passwordTxt);
@@ -62,6 +63,8 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 		////
 		signupBtn.addActionListener(this);
 		////
+		idTxt.addKeyListener(this);
+
 		idTxt.addMouseListener(this);
 		passwordTxt.addMouseListener(this);
 		
@@ -166,6 +169,28 @@ public class LogIn extends JFrame implements ActionListener,MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_TAB) {
+			passwordTxt.requestFocus();
+			if (passwordTxt.getText().equals("비밀번호")) {
+				passwordTxt.setText("");
+				passwordTxt.setEchoChar('*');
+
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
 	}
 }//end LogInWindow
 
