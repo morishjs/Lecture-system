@@ -14,6 +14,8 @@ public class ClientController {
     public static final int LECTURE_NO_EXIST = 2;
     public static final int STUDENT_REG_ERROR = 3;
     public static final int ASSIGNMENT_REG_ERROR = 4;
+    public static final int EVALUATION_REG_ERROR = 5;
+
 
     UserDBUtil userDBUtil;
     UserAWSUtil userAWSUtil;
@@ -153,5 +155,12 @@ public class ClientController {
 
     public void fileUpload(String userId, String absolutePath) {
         userAWSUtil.fileUpload(userId, absolutePath);
+    }
+
+
+    public int submitAssignment(String studentId, String assignName, String lectureId) {
+        int result = userDBUtil.registerAssignment(studentId, assignName, lectureId);
+        return result;
+
     }
 }

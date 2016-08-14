@@ -113,6 +113,10 @@ public class Assign extends JFrame implements ActionListener {
         chbtn.setVisible(checkType);
         fileRo.setEditable(false);
         lectureDropdown.setVisible(checkType);
+        sebtn.setVisible(!checkType);
+        uploadfile.setVisible(!checkType);
+        fileRo.setVisible(!checkType);
+
 
         add(lectureDropdown);
         add(assignment_name);
@@ -137,9 +141,7 @@ public class Assign extends JFrame implements ActionListener {
                 dispose();
             }
         });
-
     }
-
     public int getIndex() {
         return this.index;
     }
@@ -176,11 +178,20 @@ public class Assign extends JFrame implements ActionListener {
                         setMessage("과제를 등록하였습니다.");
                 }
             } else if (type.equals("학생")) {
-                //TODO: okbtn을 눌렀을시에 파일이 업로드 동시에 db에 과제레코드가 생겨야함.
                 if(selectedFile != null)
                 {
-                    controller.fileUpload(session.getId(),selectedFile.getAbsolutePath());
+                    //db에 레코드 업로드
+                    int result = controller.submitAssignment(session.getId(), assignment_nametf.getText(), lectureDropdown.getSelectedItem().toString());
+                    switch (result) {
+                        case ClientController.EVALUATION_REG_ERROR:
+                            setMessage("파일을 등록할 수 없습니다.");
+                            break;
+                        case ClientController.RESULT_OK:
+                            setMessage("과제를 성공적으로 제출하였습니다.");
+                            //file upload
+                            controller.fileUpload(session.getId(),selectedFile.getAbsolutePath());
 
+                    }
                 }
             }
 

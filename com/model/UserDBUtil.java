@@ -223,6 +223,14 @@ public class UserDBUtil {
         } else return ClientController.RESULT_OK;
     }
 
+    public int registerAssignment(String studentId, String assignName, String lectureId) {
+        String sql = "insert into evaluation(student_id,assignment_name,lecture_id) values(?, ?, ?)";
+        String[] info = new String[]{studentId, assignName, lectureId};
+        if (sqlUpdateTransaction(sql, info) == 0) {
+            return ClientController.EVALUATION_REG_ERROR;
+        } else return ClientController.RESULT_OK;
+    }
+
 
     //Adding
 

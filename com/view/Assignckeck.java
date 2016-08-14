@@ -16,8 +16,7 @@ public class Assignckeck extends JFrame {
 	DefaultTableModel tableModel;
 	JTable table;
 	JScrollPane scroll;
-	Object[] cols = { "이름", "첨부파일", "점수" };
-	Object[] exam ={"ㅎㅎ","ㅎㅎ","ㅎㅎ"};
+	Object[] cols = { "이름", "첨부파일", "다운로드" };
 	public Assignckeck() {
 		setTitle("과제 제출 확인");
 
@@ -26,6 +25,7 @@ public class Assignckeck extends JFrame {
 				return false;
 			}
 		};
+
 		table = new JTable(tableModel);
 		scroll = new JScrollPane(table);
 		table.setRowHeight(25);
