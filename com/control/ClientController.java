@@ -169,4 +169,12 @@ public class ClientController {
         ArrayList<ListRecord> result = userDBUtil.getEvalutation(lectureId, assignmentName);
         return result;
     }
+
+    public int fileDownload(String studentId) {
+        int result =
+        userAWSUtil.fileDownload(studentId);
+
+        return result;
+
+    }
 }

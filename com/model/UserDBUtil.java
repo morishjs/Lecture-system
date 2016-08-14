@@ -229,7 +229,7 @@ public class UserDBUtil {
     }
 
     public ArrayList<ListRecord> getEvalutation(String lectureId, String assignmentName) {
-        String sql = "select student.student_name, assignment_name" +
+        String sql = "select student.student_name, assignment_name, student.student_id" +
                 " from student inner join evaluation" +
                 " on student.student_id = evaluation.student_id" +
                 " where evaluation.lecture_id=? and assignment_name=?";
@@ -243,6 +243,7 @@ public class UserDBUtil {
                 listRecord = new ListRecord();
                 listRecord.setName(resultSet.getString(1));
                 listRecord.setAssignName(resultSet.getString(2));
+                listRecord.setId(resultSet.getString(3));
                 listRecords.add(listRecord);
             }
         } catch (SQLException e) {

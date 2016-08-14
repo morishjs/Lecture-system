@@ -1,5 +1,6 @@
 package com.view.layout;
 
+import com.control.ClientController;
 import com.view.datastructure.ListRecord;
 
 import javax.swing.*;
@@ -16,10 +17,13 @@ public class JTableModel extends AbstractTableModel {
     private static final String[] COLUMN_NAMES = new String[] {"이름","과제명", "다운로드"};
     private static final Class<?>[] COLUMN_TYPES = new Class<?>[] {String.class, String.class, JButton.class};
     int rowCount = 0;
+    int result =-1;
     ArrayList<ListRecord> info;
+    ClientController clientController;
     public JTableModel(ArrayList<ListRecord> info) {
         rowCount = info.size();
         this.info = info;
+        clientController = ClientController.getInstance();
     }
 
     @Override public int getColumnCount() {
@@ -48,9 +52,11 @@ public class JTableModel extends AbstractTableModel {
             case 2: final JButton button = new JButton(COLUMN_NAMES[columnIndex]);
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
+                        result = clientController.fileDownload(info.get(rowIndex).getStudentId());
+                        if(result == clientController.RESULT_OK)
                         JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button),
-                                "Button clicked for row "+rowIndex);
-                                
+                                "Download successfully");
+
                     }
                 });
                 return button;
