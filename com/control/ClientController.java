@@ -2,6 +2,7 @@ package com.control;
 
 import com.model.*;
 import com.view.*;
+import com.view.datastructure.ListRecord;
 
 import java.util.ArrayList;
 
@@ -162,5 +163,10 @@ public class ClientController {
         int result = userDBUtil.registerAssignment(studentId, assignName, lectureId);
         return result;
 
+    }
+
+    public ArrayList<ListRecord> getEvalutation(String lectureId, String assignmentName) {
+        ArrayList<ListRecord> result = userDBUtil.getEvalutation(lectureId, assignmentName);
+        return result;
     }
 }

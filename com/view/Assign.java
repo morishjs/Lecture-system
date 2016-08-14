@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import com.control.ClientController;
 import com.model.Assignment;
 import com.model.Session;
+import com.view.datastructure.ListRecord;
 
 public class Assign extends JFrame implements ActionListener {
     JLabel assignment_name, assignmentex, deadline, uploadfile;
@@ -151,7 +153,14 @@ public class Assign extends JFrame implements ActionListener {
         Object obj = e.getSource();
         Session session = controller.getSession();
         if (obj == chbtn) {
-            new Assignckeck();
+            String lectureId = lectureDropdown.getSelectedItem().toString();
+            String assignmentName = assignment_nametf.getText();
+            //DB evaluation에서 레코드를 가져오고 리스트에 뿌려줘야함.
+            ArrayList<ListRecord> info = controller.getEvalutation(lectureId,assignmentName);
+
+            new Assignckeck(info);
+
+
         } else if (obj == okbtn) {
             String type = session.getType();
             //DB에 Assignment를 등록하는 코드 (강사)

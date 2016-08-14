@@ -1,16 +1,13 @@
 package com.model;
 
 import com.control.ClientController;
-
+import com.view.datastructure.ListRecord;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
-
-
-import static javafx.application.Platform.exit;
 
 /**
  * Created by Junsuk on 2016-08-09.
@@ -230,6 +227,32 @@ public class UserDBUtil {
             return ClientController.EVALUATION_REG_ERROR;
         } else return ClientController.RESULT_OK;
     }
+
+    public ArrayList<ListRecord> getEvalutation(String lectureId, String assignmentName) {
+        String sql = "select student.student_name, assignment_name" +
+                " from student inner join evaluation" +
+                " on student.student_id = evaluation.student_id" +
+                " where evaluation.lecture_id=? and assignment_name=?";
+        String[] info = new String[]{lectureId, assignmentName};
+        ResultSet resultSet;
+        ListRecord listRecord = null;
+        ArrayList<ListRecord> listRecords = new ArrayList<>();
+        resultSet = sqlTransaction(sql, info);
+        try {
+            while (resultSet.next()) {
+                listRecord = new ListRecord();
+                listRecord.setName(resultSet.getString(1));
+                listRecord.setAssignName(resultSet.getString(2));
+                listRecords.add(listRecord);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            setWarningMsg("제출한 과제를 찾을 수 없습니다.");
+
+        }
+        return listRecords;
+    }
+
 
 
     //Adding
