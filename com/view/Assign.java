@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class Assign extends JFrame implements ActionListener {
     JTextField fileRo, assignment_nametf;
     JButton sebtn, okbtn, canbtn, chbtn;
     JComboBox<String> lectureDropdown;
+    JFileChooser fileChooser;
+
     String selectItem;
 
     String lecname, lecrname, deaddate;
@@ -27,9 +30,11 @@ public class Assign extends JFrame implements ActionListener {
     ClientController controller = ClientController.getInstance();
     SwingCalender swingCalender = controller.getCalender();
     int index;
+
     private String deadLine;
     private String description;
     private String name;
+    private File selectedFile;
 
     public Assign(int index) {
         Session session = controller.getSession();
@@ -52,6 +57,8 @@ public class Assign extends JFrame implements ActionListener {
         chbtn = new JButton("제출 확인");
         okbtn = new JButton("확인");
         canbtn = new JButton("취소");
+        fileChooser = new JFileChooser();
+
 
         Font font = new Font("sansSerif", 0, 12);
         assignment_name.setFont(font);
@@ -77,6 +84,9 @@ public class Assign extends JFrame implements ActionListener {
         chbtn.addActionListener(this);
         okbtn.addActionListener(this);
         canbtn.addActionListener(this);
+        sebtn.addActionListener(this);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
 
         setLayout(null);
         assignment_name.setBounds(0, 0, 50, 30);
@@ -137,16 +147,14 @@ public class Assign extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-
+        Session session = controller.getSession();
         if (obj == chbtn) {
             new Assignckeck();
         } else if (obj == okbtn) {
+            String type = session.getType();
+            //DB에 Assignment를 등록하는 코드 (강사)
+            if (type.equals("강사")) {
 
-
-
-
-            //DB에 Assignment를 등록하는 코드
-            if (controller.getSession().getType().equals("강사")) {
                 swingCalender.setButtonColor(getIndex());
                 //swingCalender.setAssignInfo(assignta.getText(), assignment_nametf.getText() );
                 ClientController clientController = ClientController.getInstance();
@@ -167,15 +175,31 @@ public class Assign extends JFrame implements ActionListener {
                     case ClientController.RESULT_OK:
                         setMessage("과제를 등록하였습니다.");
                 }
+            } else if (type.equals("학생")) {
+                //TODO: okbtn을 눌렀을시에 파일이 업로드 동시에 db에 과제레코드가 생겨야함.
+                if(selectedFile != null)
+                {
+                    controller.fileUpload(session.getId(),selectedFile.getAbsolutePath());
+
+                }
             }
 
 
             SwingCalender.chk = true;
             dispose();
+        }
 
-        } else if (obj == sebtn) {
-            System.out.println("마지막에 합시다.");
-        } else if (obj == canbtn) {
+        else if (obj == sebtn) {
+
+            int result = fileChooser.showOpenDialog(getParent());
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
+                fileRo.setText(selectedFile.getName());
+            }
+
+        } else if (obj == canbtn)
+
+        {
             SwingCalender.chk = true;
             dispose();
         }

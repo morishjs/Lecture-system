@@ -2,10 +2,13 @@ package com.model;
 
 import com.control.ClientController;
 
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
+
 
 import static javafx.application.Platform.exit;
 
@@ -28,10 +31,12 @@ public class UserDBUtil {
     public UserDBUtil() {
         try {
 
-            Class.forName("oracle.jdbc.OracleDriver");
-            String url = "jdbc:oracle:thin://@192.168.10.230:1521:xe";
-            String username = "hr";
-            String password = "a1234";
+//            Class.forName("oracle.jdbc.OracleDriver");
+            Class.forName("com.mysql.jdbc.Driver");
+//            String url = "jdbc:oracle:thin://@192.168.10.230:1521:xe";
+            String url = "jdbc:mysql://localhost:3306/lecture_system";
+            String username = "root";
+            String password = "slEhdzkffk10";
             connection = DriverManager.getConnection(url, username, password);
 
         } catch (SQLException e) {
@@ -44,6 +49,8 @@ public class UserDBUtil {
 
     }
 
+
+    //For select query.
     public ResultSet sqlTransaction(String sql, String[] info) {
 //        Connection connection = null;
         PreparedStatement statement = null;
@@ -59,6 +66,24 @@ public class UserDBUtil {
             e.printStackTrace();
         }
         return resultSet;
+    }
+
+    //For DML query
+    public int sqlUpdateTransaction(String sql, String[] info) {
+//        Connection connection = null;
+        PreparedStatement statement = null;
+        int result = 0;
+        try {
+            statement = connection.prepareStatement(sql);
+            for (int i = 1; i <= info.length; i++) {
+                statement.setString(i, info[i - 1]);
+            }
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public Student getStudent(String id, String passwd) {
@@ -160,8 +185,8 @@ public class UserDBUtil {
     public int addNewStudent(Student student) {
         String sql = "insert into student values(?, ?, ?, ?)";
         String[] info = new String[]{student.getId(), student.getName(), student.getPasswd(), student.getLecture()};
-        if (sqlTransaction(sql, info) == null) {
-            return ClientController.STUDENT_REG_ERROR;
+        if (sqlUpdateTransaction(sql, info) == 0) {
+              return ClientController.STUDENT_REG_ERROR;
         } else return ClientController.RESULT_OK;
     }
 
@@ -193,7 +218,7 @@ public class UserDBUtil {
     public int addNewAssignment(Assignment assignment, String lectureId) {
         String sql = "insert into assignment values(?, ?, ?, ?)";
         String[] info = new String[]{assignment.getAssignmentName(), assignment.getAssignmentDeadlline(), lectureId, assignment.getAssignmentDescription()};
-        if (sqlTransaction(sql, info) == null) {
+        if (sqlUpdateTransaction(sql, info) == 0) {
             return ClientController.ASSIGNMENT_REG_ERROR;
         } else return ClientController.RESULT_OK;
     }

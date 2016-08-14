@@ -1,10 +1,8 @@
 package com.control;
 
 import com.model.*;
-import oracle.jdbc.util.Login;
 import com.view.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +16,7 @@ public class ClientController {
     public static final int ASSIGNMENT_REG_ERROR = 4;
 
     UserDBUtil userDBUtil;
+    UserAWSUtil userAWSUtil;
     private static ClientController instance = new ClientController();
     private Session session=new Session();
     Assign assign = null;
@@ -38,6 +37,7 @@ public class ClientController {
     }
     public void init() {
         userDBUtil = new UserDBUtil();
+        userAWSUtil = new UserAWSUtil();
         new LogIn();
     }
 
@@ -151,4 +151,7 @@ public class ClientController {
         return  result;
     }
 
+    public void fileUpload(String userId, String absolutePath) {
+        userAWSUtil.fileUpload(userId, absolutePath);
+    }
 }
