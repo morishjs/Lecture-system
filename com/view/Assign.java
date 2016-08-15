@@ -166,7 +166,7 @@ public class Assign extends JFrame implements ActionListener {
             //DB에 Assignment를 등록하는 코드 (강사)
             if (type.equals("강사")) {
 
-                swingCalender.setButtonColor(getIndex());
+
                 //swingCalender.setAssignInfo(assignta.getText(), assignment_nametf.getText() );
                 ClientController clientController = ClientController.getInstance();
                 SwingCalender swingCalender = clientController.getCalender();
@@ -185,6 +185,7 @@ public class Assign extends JFrame implements ActionListener {
                         break;
                     case ClientController.RESULT_OK:
                         setMessage("과제를 등록하였습니다.");
+                        swingCalender.setButtonColor(getIndex());
                 }
             } else if (type.equals("학생")) {
                 if(selectedFile != null)

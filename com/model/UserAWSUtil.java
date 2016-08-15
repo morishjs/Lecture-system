@@ -67,7 +67,7 @@ public class UserAWSUtil {
             S3Object s3object = s3client.getObject(new GetObjectRequest(
                     bucketName, keyName));
             InputStream inputStream = s3object.getObjectContent();
-            String tmp = System.getProperty("user.home") + "/" + keyName;
+            String tmp = System.getProperty("user.home") + "/Downloads/" + keyName;
             OutputStream outputStream = new FileOutputStream(new File(tmp));
 
             int read = 0;

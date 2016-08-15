@@ -167,7 +167,7 @@ public class UserDBUtil {
                 assignment = new Assignment();
                 assignment.setAssignmentName(resultSet.getString(1));
                 assignment.setAssignmentDeadlline(resultSet.getString(2));
-                assignment.setAssignmentDescription(resultSet.getString(4));
+                assignment.setAssignmentDescription(resultSet.getString(3));
                 assignments.add(assignment);
             }
         } catch (SQLException e) {
@@ -214,7 +214,7 @@ public class UserDBUtil {
 
     public int addNewAssignment(Assignment assignment, String lectureId) {
         String sql = "insert into assignment values(?, ?, ?, ?)";
-        String[] info = new String[]{assignment.getAssignmentName(), assignment.getAssignmentDeadlline(), lectureId, assignment.getAssignmentDescription()};
+        String[] info = new String[]{assignment.getAssignmentName(), assignment.getAssignmentDeadlline(), assignment.getAssignmentDescription(),lectureId};
         if (sqlUpdateTransaction(sql, info) == 0) {
             return ClientController.ASSIGNMENT_REG_ERROR;
         } else return ClientController.RESULT_OK;
