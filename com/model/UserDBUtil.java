@@ -168,6 +168,8 @@ public class UserDBUtil {
                 assignment.setAssignmentName(resultSet.getString(1));
                 assignment.setAssignmentDeadlline(resultSet.getString(2));
                 assignment.setAssignmentDescription(resultSet.getString(3));
+                assignment.setLectureId(resultSet.getString(4));
+
                 assignments.add(assignment);
             }
         } catch (SQLException e) {

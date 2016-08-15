@@ -172,6 +172,7 @@ public class SwingCalender extends JFrame implements ActionListener
 					as.setAssignmentDeadline(assignment.getAssignmentDeadlline());
 					as.setAssignmentDescription(assignment.getAssignmentDescription());
 					as.setAssignmentName(assignment.getAssignmentName());
+					as.setLecture(assignment.getLecture());
 				}
 
 			} else if (chk == false) {

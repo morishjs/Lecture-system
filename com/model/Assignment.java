@@ -7,6 +7,8 @@ public class Assignment {
     private String assignmentDeadlline;
     private String assignmentName;
     private String assignmentDescription;
+    private String lectureId;
+
 
     public void setAssignmentDescription(String assignmentDescription) {
         this.assignmentDescription = assignmentDescription;
@@ -20,6 +22,10 @@ public class Assignment {
         this.assignmentName = assignmentName;
     }
 
+    public void setLectureId(String lectureId) {
+        this.lectureId = lectureId;
+    }
+
     public String getAssignmentDeadlline() {
         return assignmentDeadlline;
     }
@@ -30,5 +36,9 @@ public class Assignment {
 
     public String getAssignmentDescription() {
         return assignmentDescription;
+    }
+
+    public String getLecture() {
+        return lectureId;
     }
 }

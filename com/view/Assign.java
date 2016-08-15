@@ -37,6 +37,7 @@ public class Assign extends JFrame implements ActionListener {
     private String description;
     private String name;
     private File selectedFile;
+    private String lectureId;
 
     public Assign(int index) {
         Session session = controller.getSession();
@@ -247,5 +248,10 @@ public class Assign extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(this, label);
 
     }// end setMessage
+
+    public void setLecture(String lecture) {
+        this.lectureId = lecture;
+        lectureDropdown.setSelectedItem(this.lectureId);
+    }
 }
 
